@@ -1,0 +1,225 @@
+﻿<% const title = 'Register as Admin - Great Rift Shuttle'; %>
+<%- include('header') %>
+
+<!-- Register Admin Page -->
+<section class="auth-container">
+    <div class="register-wrapper">
+        <div class="register-form-card">
+            <h1>Admin Registration</h1>
+            <p class="auth-subtitle">Create your Great Rift Shuttle admin account</p>
+
+            <form class="auth-form" method="POST" action="/register/admin">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first_name" required placeholder="Enter first name">
+                </div>
+
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last_name" required placeholder="Enter last name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter email address">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Enter phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="office-location">Office Location</label>
+                    <select id="office-location" name="office_location" required>
+                        <option value="">Select office location</option>
+                        <option value="nairobi">Nairobi (HQ)</option>
+                        <option value="eldoret">Eldoret</option>
+                        <option value="kitale">Kitale</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Create a strong password">
+                    <small>At least 8 characters with uppercase, lowercase, and numbers</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm_password" required placeholder="Confirm your password">
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the Terms and Conditions</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Create Admin Account</button>
+
+                <p class="auth-link">Already have an account? <a href="/login">Login here</a></p>
+            </form>
+        </div>
+
+        <div class="register-info-card">
+            <h3>Admin Panel Features</h3>
+            <ul class="register-features">
+                <li>✓ Manage bookings and routes</li>
+                <li>✓ View driver information</li>
+                <li>✓ Monitor fleet status</li>
+                <li>✓ Generate reports</li>
+                <li>✓ Manage fares and pricing</li>
+                <li>✓ Customer support management</li>
+            </ul>
+            <a href="/" class="btn btn-outline" style="width: 100%;">Back to Home</a>
+        </div>
+    </div>
+</section>
+
+<style>
+.auth-container {
+    padding: 3rem var(--spacing-md);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    margin-top: 60px;
+}
+
+.register-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    max-width: 900px;
+    width: 100%;
+}
+
+.register-form-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.register-form-card h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.auth-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.auth-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.auth-form small {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.auth-form input,
+.auth-form select {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.auth-form input:focus,
+.auth-form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(30, 95, 143, 0.1);
+}
+
+.auth-form .checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.auth-form .checkbox input[type="checkbox"] {
+    width: auto;
+}
+
+.auth-form .checkbox label {
+    margin-bottom: 0;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: var(--spacing-md);
+    color: var(--text-light);
+}
+
+.auth-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+.register-info-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.register-info-card h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.5rem;
+}
+
+.register-features {
+    list-style: none;
+    margin-bottom: var(--spacing-lg);
+}
+
+.register-features li {
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+}
+
+.register-info-card .btn-outline {
+    border-color: white;
+    color: white;
+    margin-top: auto;
+}
+
+.register-info-card .btn-outline:hover {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .register-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .register-info-card {
+        display: none;
+    }
+}
+</style>
+
+<%- include('footer') %>

@@ -1,0 +1,149 @@
+<% const title = 'Manage Drivers - Great Rift Shuttle'; %>
+<%- include('dashboard-header') %>
+
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'drivers' }) %>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <div>
+        <h1>Manage Drivers</h1>
+        <% if(addSuccess){ %>
+          <div class="alert alert-success" style="color: green; background-color: aliceblue;">
+            Driver added successfully!
+          </div>
+        <% } %>
+      </div>
+      <button class="btn btn-primary" onclick="openAddDriverModal()">+ Add Driver</button>
+    </div>
+
+    <!-- Add Driver Modal -->
+    <div id="addDriverModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add Driver</h2>
+          <button class="modal-close" onclick="closeAddDriverModal()">&times;</button>
+        </div>
+        <form action="/add-driver" method="post" class="modal-form">
+          <div class="group">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="first_name" required />
+          </div>
+
+          <div class="group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last_name" required />
+          </div>
+
+          <div class="group">
+            <label for="id-number">ID Number</label>
+            <input type="text" id="id-number" name="id_number" required />
+          </div>
+
+          <div class="group">
+            <label for="phone-number">Phone Number</label>
+            <input type="tel" id="phone-number" name="phone_number" required />
+          </div>
+
+          <div class="group">
+            <label for="license-number">License Number</label>
+            <input type="text" id="license-number" name="license_number" required />
+          </div>
+
+          <div class="group">
+            <label for="license-expiry">License Expiry Date</label>
+            <input type="date" id="license-expiry" name="license_expiry_date" required />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeAddDriverModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add Driver</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Change Driver Status Modal -->
+    <div id="changeDriverStatusModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Change Driver Status</h2>
+          <button class="modal-close" onclick="closeChangeDriverStatusModal()">&times;</button>
+        </div>
+        <div style="padding: var(--spacing-md);">
+          <p style="margin-bottom: var(--spacing-md); color: var(--text-color);"><strong>Driver:</strong> <span id="driverName"></span></p>
+          <div class="group">
+            <label for="new-status">New Status</label>
+            <select id="new-status" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); font-size: 0.95rem;">
+              <option value="active">Active</option>
+              <option value="on_leave">On Leave</option>
+              <option value="suspended">Suspended</option>
+              <option value="terminated">Terminated</option>
+            </select>
+          </div>
+          <div class="modal-footer" style="padding-top: var(--spacing-md);">
+            <button type="button" class="btn btn-secondary" onclick="closeChangeDriverStatusModal()">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="submitDriverStatusChange()">Update Status</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Drivers List</h2>
+
+      <div class="card-controls">
+        <div class="search-box">
+          <input type="text" placeholder="Search drivers by name or ID..." />
+        </div>
+        <div class="filter-group">
+          <select>
+            <option>All Drivers</option>
+            <option>Active</option>
+            <option>On Leave</option>
+            <option>Suspended</option>
+            <option>Terminated</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="drivers-list">
+        <table class="routes-table">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>ID Number</th>
+              <th>Phone</th>
+              <th>License Number</th>
+              <th>License Expiry</th>
+              <th>Status</th>
+              <th>Rating</th>
+              <th>Date Joined</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% drivers.forEach(driver => { %>
+              <tr>
+                <td><%= driver.first_name %></td>
+                <td><%= driver.last_name %></td>
+                <td><%= driver.id_number %></td>
+                <td><%= driver.phone_number %></td>
+                <td><%= driver.license_number %></td>
+                <td><%= formatDate(driver.license_expiry_date) %></td>
+                <td><span class="badge badge-<%= driver.status === 'active' ? 'success' : driver.status === 'on_leave' ? 'warning' : 'danger' %>"><%= driver.status %></span></td>
+                <td><%= driver.rating_cache %>/5.0</td>
+                <td><%= formatDate(driver.date_joined) %></td>
+                <td><button class="btn btn-sm btn-secondary" onclick="openChangeDriverStatusModal(<%= driver.driver_id %>, '<%= driver.first_name %> <%= driver.last_name %>', '<%= driver.status %>')">Change Status</button></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<%- include('dashboard-footer') %>

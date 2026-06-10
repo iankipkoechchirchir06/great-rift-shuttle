@@ -1,0 +1,139 @@
+<% const title = 'Account Settings - Great Rift Shuttle'; %>
+<%- include('header') %>
+
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'settings' }) %>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <h1>Account Settings</h1>
+    </div>
+
+    <!-- Security Settings -->
+    <div class="dashboard-card">
+      <h2>Security Settings</h2>
+
+      <div class="item-list">
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Password</h4>
+            <div class="item-details">
+              <span class="item-detail">Last changed: 2026-02-15</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline" disabled>Change Password (Coming Soon)</button>
+        </div>
+
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Two-Factor Authentication</h4>
+            <div class="item-details">
+              <span class="item-detail">
+                <span class="badge badge-warning">Disabled</span>
+              </span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline" disabled>Enable 2FA (Coming Soon)</button>
+        </div>
+
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Login History</h4>
+            <div class="item-details">
+              <span class="item-detail">Last login: 2026-05-13 at 2:30 PM</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline">View History</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Settings -->
+    <div class="dashboard-card">
+      <h2>Notification Preferences</h2>
+
+      <div class="empty-state">
+        <div class="empty-state-icon">🔔</div>
+        <h3>Manage Your Notifications</h3>
+        <p>
+          Control how you receive updates about your bookings, trips, payments, and account.
+          Choose to receive notifications via email, SMS, or in-app alerts.
+        </p>
+        <p style="color: var(--text-light); font-size: 0.95rem; margin-top: var(--spacing-md);">
+          Features coming soon: booking confirmations, trip reminders, payment notifications,
+          promotional updates, and custom alert preferences.
+        </p>
+        <button class="btn btn-primary" disabled style="margin-top: var(--spacing-md);">Manage Notifications (Coming Soon)</button>
+      </div>
+    </div>
+
+    <!-- Privacy Settings -->
+    <div class="dashboard-card">
+      <h2>Privacy & Data</h2>
+
+      <div class="item-list">
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Data Collection</h4>
+            <div class="item-details">
+              <span class="item-detail">We collect trip history, payment data, and preferences to improve your experience.</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline">Privacy Policy</button>
+        </div>
+
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Download Your Data</h4>
+            <div class="item-details">
+              <span class="item-detail">Request a copy of all your personal data in a portable format.</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline" disabled>Download (Coming Soon)</button>
+        </div>
+
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Delete Account</h4>
+            <div class="item-details">
+              <span class="item-detail">Permanently delete your account and associated data.</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline" style="color: var(--danger-color); border-color: var(--danger-color);" disabled>Delete Account (Coming Soon)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Support -->
+    <div class="dashboard-card">
+      <h2>Support & Help</h2>
+
+      <div class="item-list">
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Contact Support</h4>
+            <div class="item-details">
+              <span class="item-detail"><strong>Email:</strong> support@greatriftshuttle.com</span>
+              <span class="item-detail"><strong>Phone:</strong> +254 700 123 456</span>
+              <span class="item-detail"><strong>Hours:</strong> 24/7</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline">Get Help</button>
+        </div>
+
+        <div class="item-card">
+          <div class="item-info">
+            <h4>FAQ & Documentation</h4>
+            <div class="item-details">
+              <span class="item-detail">Find answers to common questions about bookings, payments, and more.</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline">View FAQ</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<%- include('footer') %>

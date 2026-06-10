@@ -1,0 +1,138 @@
+  <script>
+    let currentDriverId = null;
+    let currentVehiclePlate = null;
+
+    function openAddRouteModal() {
+      const modal = document.getElementById('addRouteModal');
+      if (modal) {
+        modal.classList.add('show');
+      }
+    }
+
+    function closeAddRouteModal() {
+      const modal = document.getElementById('addRouteModal');
+      if (modal) {
+        modal.classList.remove('show');
+      }
+    }
+
+    function openAddDriverModal() {
+      const modal = document.getElementById('addDriverModal');
+      if (modal) {
+        modal.classList.add('show');
+      }
+    }
+
+    function closeAddDriverModal() {
+      const modal = document.getElementById('addDriverModal');
+      if (modal) {
+        modal.classList.remove('show');
+      }
+    }
+
+    function openAddVehicleModal() {
+      const modal = document.getElementById('addVehicleModal');
+      if (modal) {
+        modal.classList.add('show');
+      }
+    }
+
+    function closeAddVehicleModal() {
+      const modal = document.getElementById('addVehicleModal');
+      if (modal) {
+        modal.classList.remove('show');
+      }
+    }
+
+    function openChangeDriverStatusModal(driverId, driverName, currentStatus) {
+      currentDriverId = driverId;
+      const modal = document.getElementById('changeDriverStatusModal');
+      const nameSpan = document.getElementById('driverName');
+      const statusSelect = document.getElementById('new-status');
+
+      if (modal && nameSpan && statusSelect) {
+        nameSpan.textContent = driverName;
+        statusSelect.value = currentStatus;
+        modal.classList.add('show');
+      }
+    }
+
+    function closeChangeDriverStatusModal() {
+      const modal = document.getElementById('changeDriverStatusModal');
+      if (modal) {
+        modal.classList.remove('show');
+      }
+      currentDriverId = null;
+    }
+
+    function submitDriverStatusChange() {
+      const statusSelect = document.getElementById('new-status');
+      const newStatus = statusSelect.value;
+
+      if (!currentDriverId || !newStatus) {
+        alert('Please select a status');
+        return;
+      }
+
+      window.location.href = `/update-driver-status?driverId=${currentDriverId}&status=${newStatus}`;
+    }
+
+    function openChangeVehicleStatusModal(numberPlate, model, currentStatus) {
+      currentVehiclePlate = numberPlate;
+      const modal = document.getElementById('changeVehicleStatusModal');
+      const infoSpan = document.getElementById('vehicleInfo');
+      const statusSelect = document.getElementById('vehicle-new-status');
+
+      if (modal && infoSpan && statusSelect) {
+        infoSpan.textContent = `${model} (${numberPlate})`;
+        statusSelect.value = currentStatus;
+        modal.classList.add('show');
+      }
+    }
+
+    function closeChangeVehicleStatusModal() {
+      const modal = document.getElementById('changeVehicleStatusModal');
+      if (modal) {
+        modal.classList.remove('show');
+      }
+      currentVehiclePlate = null;
+    }
+
+    function submitVehicleStatusChange() {
+      const statusSelect = document.getElementById('vehicle-new-status');
+      const newStatus = statusSelect.value;
+
+      if (!currentVehiclePlate || !newStatus) {
+        alert('Please select a status');
+        return;
+      }
+
+      window.location.href = `/update-vehicle-status?numberPlate=${currentVehiclePlate}&status=${newStatus}`;
+    }
+
+    window.addEventListener('click', (event) => {
+      const routeModal = document.getElementById('addRouteModal');
+      const driverModal = document.getElementById('addDriverModal');
+      const vehicleModal = document.getElementById('addVehicleModal');
+      const changeDriverModal = document.getElementById('changeDriverStatusModal');
+      const changeVehicleModal = document.getElementById('changeVehicleStatusModal');
+
+      if (routeModal && event.target === routeModal) {
+        closeAddRouteModal();
+      }
+      if (driverModal && event.target === driverModal) {
+        closeAddDriverModal();
+      }
+      if (vehicleModal && event.target === vehicleModal) {
+        closeAddVehicleModal();
+      }
+      if (changeDriverModal && event.target === changeDriverModal) {
+        closeChangeDriverStatusModal();
+      }
+      if (changeVehicleModal && event.target === changeVehicleModal) {
+        closeChangeVehicleStatusModal();
+      }
+    });
+  </script>
+  </body>
+</html>

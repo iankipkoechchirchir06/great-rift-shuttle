@@ -1,0 +1,51 @@
+<% const title = 'Manage Bookings - Great Rift Shuttle'; %>
+<%- include('dashboard-header') %>
+
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'bookings' }) %>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <h1>My Bookings</h1>
+      <div class="header-actions">
+        <a href="/routes" class="btn btn-primary btn-sm">+ New Booking</a>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Manage Bookings</h2>
+
+      <div class="card-controls">
+        <div class="search-box">
+          <input type="text" placeholder="Search bookings by ID or route..." />
+        </div>
+        <div class="filter-group">
+          <select>
+            <option>All Status</option>
+            <option>Confirmed</option>
+            <option>Pending</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="empty-state">
+        <div class="empty-state-icon">🎫</div>
+        <h3>Manage Your Bookings</h3>
+        <p>
+          View all your shuttle bookings with detailed information including booking confirmation,
+          reservation dates, seat allocations, pricing details, and payment status.
+          Cancel, modify, or download booking confirmations.
+        </p>
+        <p style="color: var(--text-light); font-size: 0.95rem; margin-top: var(--spacing-md);">
+          Features coming soon: booking modifications, cancellation requests, e-tickets, and booking history.
+        </p>
+        <a href="/routes" class="btn btn-primary" style="margin-top: var(--spacing-md);">Book a New Trip</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<%- include('dashboard-footer') %>

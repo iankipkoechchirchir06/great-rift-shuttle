@@ -1,0 +1,253 @@
+﻿<% const title = 'Register as Driver - Great Rift Shuttle'; %>
+<%- include('header') %>
+
+<!-- Register Driver Page -->
+<section class="auth-container">
+    <div class="register-wrapper">
+        <div class="register-form-card">
+            <h1>Driver Registration</h1>
+            <p class="auth-subtitle">Apply to join Great Rift Shuttle driving team</p>
+
+            <form class="auth-form" method="POST" action="/register/driver">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="first_name" required placeholder="Enter first name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="last_name" required placeholder="Enter last name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="id-number">National ID Number</label>
+                    <input type="text" id="id-number" name="id_number" required placeholder="Enter your ID number">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Enter phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="license-number">Driving License Number</label>
+                    <input type="text" id="license-number" name="license_number" required placeholder="Enter license number">
+                </div>
+
+                <div class="form-group">
+                    <label for="license-expiry">License Expiry Date</label>
+                    <input type="date" id="license-expiry" name="license_expiry" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">Years of Driving Experience</label>
+                    <select id="experience" name="experience" required>
+                        <option value="">Select experience level</option>
+                        <option value="1">1-2 years</option>
+                        <option value="3">3-5 years</option>
+                        <option value="6">6-10 years</option>
+                        <option value="10">10+ years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Create a strong password">
+                    <small>At least 8 characters with uppercase, lowercase, and numbers</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm_password" required placeholder="Confirm your password">
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the Terms and Conditions</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Submit Driver Application</button>
+
+                <p class="auth-link">Already have an account? <a href="/login">Login here</a></p>
+            </form>
+        </div>
+
+        <div class="register-info-card">
+            <h3>Why Drive with Us?</h3>
+            <ul class="register-features">
+                <li>✓ Competitive salary</li>
+                <li>✓ Modern vehicle fleet</li>
+                <li>✓ Flexible schedules</li>
+                <li>✓ Professional environment</li>
+                <li>✓ Training programs</li>
+                <li>✓ Career growth opportunities</li>
+            </ul>
+            <a href="/" class="btn btn-outline" style="width: 100%;">Back to Home</a>
+        </div>
+    </div>
+</section>
+
+<style>
+.auth-container {
+    padding: 3rem var(--spacing-md);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    margin-top: 60px;
+}
+
+.register-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    max-width: 900px;
+    width: 100%;
+}
+
+.register-form-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.register-form-card h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.auth-subtitle {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.auth-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.auth-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.auth-form small {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.auth-form input,
+.auth-form select {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.auth-form input:focus,
+.auth-form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(30, 95, 143, 0.1);
+}
+
+.auth-form .checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.auth-form .checkbox input[type="checkbox"] {
+    width: auto;
+}
+
+.auth-form .checkbox label {
+    margin-bottom: 0;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: var(--spacing-md);
+    color: var(--text-light);
+}
+
+.auth-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+.register-info-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.register-info-card h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.5rem;
+}
+
+.register-features {
+    list-style: none;
+    margin-bottom: var(--spacing-lg);
+}
+
+.register-features li {
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+}
+
+.register-info-card .btn-outline {
+    border-color: white;
+    color: white;
+    margin-top: auto;
+}
+
+.register-info-card .btn-outline:hover {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .register-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .register-info-card {
+        display: none;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<%- include('footer') %>

@@ -1,0 +1,292 @@
+﻿<% const title = 'Contact Great Rift Shuttle - Get in Touch'; %>
+<%- include('header') %>
+
+<!-- Page Header Section -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>We''re here to help. Get in touch with Great Rift Shuttle</p>
+    </div>
+</section>
+
+<!-- Contact Content -->
+<section class="contact-content">
+    <div class="container">
+        <div class="contact-grid">
+            <!-- Contact Form -->
+            <div class="contact-form-section">
+                <h2>Send us a Message</h2>
+                <form class="contact-form" method="POST" action="/contact">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="booking">Booking Inquiry</option>
+                            <option value="parcel">Parcel Delivery</option>
+                            <option value="charter">Shuttle Charter</option>
+                            <option value="complaint">Complaint</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info-section">
+                <h2>Contact Information</h2>
+                
+                <div class="info-card">
+                    <h3>📞 Phone</h3>
+                    <p><strong>Main Line:</strong> +254 700 123 456</p>
+                    <p><strong>Nairobi Office:</strong> +254 700 123 456</p>
+                    <p><strong>Eldoret Office:</strong> +254 700 234 567</p>
+                    <p><strong>Kitale Office:</strong> +254 700 345 678</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>✉️ Email</h3>
+                    <p><strong>General Inquiries:</strong> <a href="mailto:info@greatriftshuttle.com">info@greatriftshuttle.com</a></p>
+                    <p><strong>Bookings:</strong> <a href="mailto:bookings@greatriftshuttle.com">bookings@greatriftshuttle.com</a></p>
+                    <p><strong>Parcel Services:</strong> <a href="mailto:parcels@greatriftshuttle.com">parcels@greatriftshuttle.com</a></p>
+                </div>
+
+                <div class="info-card">
+                    <h3>🏢 Office Locations</h3>
+                    <p><strong>Nairobi (HQ):</strong><br>Mfangano Trade Centre, Mfangano Street, Nairobi<br>Hours: 6 AM - 7 PM Daily</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>⏰ Operating Hours</h3>
+                    <p><strong>Monday - Friday:</strong> 6 AM - 7 PM</p>
+                    <p><strong>Saturday:</strong> 6 AM - 6 PM</p>
+                    <p><strong>Sunday:</strong> 7 AM - 5 PM</p>
+                    <p><strong>Public Holidays:</strong> 8 AM - 4 PM</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>💬 WhatsApp</h3>
+                    <p><strong>Customer Support:</strong> <a href="https://wa.me/254700123456">Chat with us on WhatsApp</a></p>
+                    <p>Available for quick inquiries and support</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="contact-faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-items">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What are your booking office hours?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Our offices are open Monday to Friday 6 AM - 7 PM, Saturday 6 AM - 6 PM, and Sunday 7 AM - 5 PM. Public holidays 8 AM - 4 PM. You can book online anytime.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How quickly can I expect a response to my inquiry?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>We aim to respond to all inquiries within 24 hours during business days. For urgent matters, please call us directly.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I visit your office in person?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Yes! Our Nairobi office is open during business hours. You can visit to book tickets, arrange parcel services, or discuss charter bookings.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.page-hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 3rem var(--spacing-md);
+    text-align: center;
+    margin-top: 60px;
+}
+
+.page-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.page-hero p {
+    font-size: 1.1rem;
+}
+
+.contact-content {
+    padding: var(--spacing-2xl) var(--spacing-md);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.contact-form-section h2,
+.contact-info-section h2 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-lg);
+}
+
+.contact-form {
+    background-color: var(--light-color);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+}
+
+.contact-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.contact-form label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(30, 95, 143, 0.1);
+}
+
+.info-card {
+    background-color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--secondary-color);
+}
+
+.info-card h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.info-card p {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    line-height: 1.8;
+}
+
+.info-card a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.info-card a:hover {
+    text-decoration: underline;
+}
+
+.contact-faq {
+    background-color: var(--light-color);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-top: var(--spacing-2xl);
+}
+
+.contact-faq h2 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-lg);
+}
+
+.faq-items {
+    max-width: 100%;
+}
+
+.faq-item {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-md);
+    overflow: hidden;
+    background-color: white;
+}
+
+.faq-question {
+    width: 100%;
+    padding: var(--spacing-md);
+    background-color: var(--light-color);
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.faq-question:hover {
+    background-color: rgba(30, 95, 143, 0.05);
+}
+
+.faq-answer {
+    padding: var(--spacing-md);
+    color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-hero h1 {
+        font-size: 1.8rem;
+    }
+}
+</style>
+
+<%- include('footer') %>

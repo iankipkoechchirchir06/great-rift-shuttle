@@ -1,0 +1,462 @@
+<% const title = 'Great Rift Shuttle - Safe, Reliable Transport Across Kenya'; %>
+<%- include('header') %>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Your Trusted Journey Across Kenya</h1>
+            <p class="hero-subtitle">Fast, Affordable, and Reliable Shuttle Services Connecting Major Towns in the Rift Valley and Western Kenya</p>
+            <div class="hero-ctas">
+                <a href="#booking" class="btn btn-primary btn-lg">Book Your Trip Now</a>
+                <a href="#parcel-service" class="btn btn-secondary btn-lg">Send a Parcel</a>
+            </div>
+            <div class="hero-badges">
+                <div class="badge">
+                    <span class="badge-icon">✓</span>
+                    <p>Safe & Reliable</p>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon">✓</span>
+                    <p>Affordable Fares</p>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon">✓</span>
+                    <p>Daily Departures</p>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon">✓</span>
+                    <p>Secure Parcels</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Booking Section -->
+    <section class="booking-widget" id="booking">
+        <div class="container">
+            <h2>Book Your Journey in Minutes</h2>
+            <div class="booking-form">
+                <div class="form-group">
+                    <label for="from">From</label>
+                    <select id="from" required>
+                        <option value="">Select departure town</option>
+                        <option value="nairobi">Nairobi</option>
+                        <option value="eldoret">Eldoret</option>
+                        <option value="kitale">Kitale</option>
+                        <option value="bungoma">Bungoma</option>
+                        <option value="nakuru">Nakuru</option>
+                        <option value="naivasha">Naivasha</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="to">To</label>
+                    <select id="to" required>
+                        <option value="">Select destination</option>
+                        <option value="nairobi">Nairobi</option>
+                        <option value="eldoret">Eldoret</option>
+                        <option value="kitale">Kitale</option>
+                        <option value="bungoma">Bungoma</option>
+                        <option value="nakuru">Nakuru</option>
+                        <option value="naivasha">Naivasha</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Travel Date</label>
+                    <input type="date" id="date" required />
+                </div>
+                <div class="form-group">
+                    <label for="passengers">Passengers</label>
+                    <input type="number" id="passengers" min="1" max="11" value="1" required />
+                </div>
+                <button class="btn btn-primary btn-lg" style="width: 100%; margin-top: auto;">Check Availability</button>
+            </div>
+            <p class="booking-note"><a href="#parcel-service">Not traveling? Send a parcel instead →</a></p>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-us">
+        <div class="container">
+            <h2>Why Travelers Trust Great Rift Shuttle</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Safety First</h3>
+                    <p>Well-maintained 11-seater PSVs with certified, experienced drivers. Your safety is our priority.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Punctual & Reliable</h3>
+                    <p>Regular departures throughout the day. We respect your time and deliver on our promises.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Affordable Fares</h3>
+                    <p>Competitive pricing without compromising on comfort or safety. Great value for money.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🪑</div>
+                    <h3>Comfortable Journey</h3>
+                    <p>Spacious, well-maintained vehicles with relaxing seats. Long journeys made comfortable.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Easy Booking</h3>
+                    <p>Book online, call us, or visit any of our offices. Flexible booking options for your convenience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Reliable Courier</h3>
+                    <p>Secure parcel and luggage delivery across all our routes. Trusted by businesses and families.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Routes Section -->
+    <section class="routes" id="routes">
+        <div class="container">
+            <h2>We Go Where You Need to Go</h2>
+            <p class="section-subtitle">Connecting major towns across Kenya's Rift Valley and Western regions</p>
+            <div class="routes-grid">
+                <div class="route-card">
+                    <h3>Nairobi ↔ Eldoret</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~5-6 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 6 AM, 9 AM, 1 PM, 5 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 800</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Nairobi ↔ Kitale</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~6-7 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 6 AM, 1 PM, 6 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 1,000</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Nairobi ↔ Bungoma</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~7-8 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 6 AM, 12 PM, 4 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 1,200</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Nairobi ↔ Nakuru</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~2-3 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> Every hour, 6 AM - 6 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 400</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Eldoret ↔ Kitale</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~1.5-2 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 7 AM, 10 AM, 2 PM, 5 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 300</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+                <div class="route-card">
+                    <h3>Eldoret ↔ Bungoma</h3>
+                    <p class="route-info"><strong>Duration:</strong> ~2-3 hours</p>
+                    <p class="route-info"><strong>Departures:</strong> 8 AM, 1 PM, 4 PM</p>
+                    <p class="route-info"><strong>From:</strong> KES 400</p>
+                    <a href="#booking" class="btn btn-outline">Book This Route</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🚐</div>
+                    <h3>Passenger Transport</h3>
+                    <p>Comfortable, reliable shuttle service for business, leisure, and family travel. Daily departures with assigned seating and flexible bookings.</p>
+                    <a href="#booking" class="btn btn-outline">Book Your Seat</a>
+                </div>
+                <div class="service-card" id="parcel-service">
+                    <div class="service-icon">📦</div>
+                    <h3>Parcel & Courier</h3>
+                    <p>Affordable, secure parcel delivery across all routes. Perfect for e-commerce, businesses, and personal parcels with door-to-door options.</p>
+                    <a href="#contact" class="btn btn-outline">Send a Parcel</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎉</div>
+                    <h3>Shuttle Hire</h3>
+                    <p>Professional shuttle hiring for corporate events, weddings, group tours, and team outings with flexible hire periods.</p>
+                    <a href="#contact" class="btn btn-outline">Inquire About Hiring</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>Booking Your Journey is Simple</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Select Your Route</h3>
+                    <p>Choose departure town and destination, pick your travel date.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Choose Your Trip</h3>
+                    <p>View available times, select seats, and see pricing upfront.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Book & Pay</h3>
+                    <p>Provide details and pay securely via M-Pesa, card, or bank transfer.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Travel or Receive</h3>
+                    <p>Get confirmation, report before departure, and track parcels real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fares Section -->
+    <section class="fares">
+        <div class="container">
+            <h2>Transparent, Competitive Fares</h2>
+            <div class="fares-table-wrapper">
+                <table class="fares-table">
+                    <thead>
+                        <tr>
+                            <th>Route</th>
+                            <th>Standard Fare</th>
+                            <th>Peak Season</th>
+                            <th>Parcel Rate (per kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nairobi - Eldoret</td>
+                            <td>KES 800-1,200</td>
+                            <td>KES 1,500-2,500</td>
+                            <td>KES 20-50</td>
+                        </tr>
+                        <tr>
+                            <td>Nairobi - Kitale</td>
+                            <td>KES 1,000-1,500</td>
+                            <td>KES 2,000-3,000</td>
+                            <td>KES 25-60</td>
+                        </tr>
+                        <tr>
+                            <td>Nairobi - Bungoma</td>
+                            <td>KES 1,200-1,800</td>
+                            <td>KES 2,200-3,500</td>
+                            <td>KES 30-70</td>
+                        </tr>
+                        <tr>
+                            <td>Nairobi - Nakuru</td>
+                            <td>KES 400-600</td>
+                            <td>KES 800-1,200</td>
+                            <td>KES 10-25</td>
+                        </tr>
+                        <tr>
+                            <td>Eldoret - Kitale</td>
+                            <td>KES 300-500</td>
+                            <td>KES 600-1,000</td>
+                            <td>KES 15-30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="fares-note">* Fares vary by season and demand. Book early for best rates. Children below 3 travel free.</p>
+            <a href="#routes" class="btn btn-primary">View Full Fares</a>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Safe journey, punctual arrival. Great Rift Shuttle is my go-to option for Nairobi-Eldoret travel. Highly recommended!"</p>
+                    <p class="testimonial-author"><strong>Grace K.</strong> — Business Professional</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Affordable parcel delivery service. My online orders reach customers reliably. Best courier option in Western Kenya."</p>
+                    <p class="testimonial-author"><strong>Samuel M.</strong> — E-commerce Entrepreneur</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Hired a shuttle for our company team-building event. Professional drivers, clean vehicles, excellent service. Will use again!"</p>
+                    <p class="testimonial-author"><strong>Margaret W.</strong> — HR Manager</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Section -->
+    <section class="safety">
+        <div class="container">
+            <h2>Your Safety is Our Priority</h2>
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <h3>✓ Certified PSV Vehicles</h3>
+                    <p>All vehicles regularly maintained and certified for passenger safety.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ Professional Drivers</h3>
+                    <p>Experienced, trained drivers committed to safe driving practices.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ Insurance Coverage</h3>
+                    <p>Full insurance for passengers and cargo.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ 24/7 Support</h3>
+                    <p>Dedicated support team to assist with any issues.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ Security Measures</h3>
+                    <p>Tracking systems, secure luggage handling, monitored checkpoints.</p>
+                </div>
+                <div class="safety-item">
+                    <h3>✓ Emergency Response</h3>
+                    <p>Quick response protocols and emergency contact support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section class="locations">
+        <div class="container">
+            <h2>Visit Our Booking Offices</h2>
+            <div class="locations-grid">
+                <div class="location-card">
+                    <h3>Nairobi Office</h3>
+                    <p><strong>Location:</strong> Mfangano Trade Centre, Mfangano Street, Nairobi</p>
+                    <p><strong>Phone:</strong> +254 700 123 456</p>
+                    <p><strong>Hours:</strong> 6 AM - 7 PM Daily</p>
+                    <a href="#" class="btn btn-outline btn-sm">Get Directions</a>
+                </div>
+                <div class="location-card">
+                    <h3>Eldoret Office</h3>
+                    <p><strong>Location:</strong> Opposite National Bank, Oloo Street, Eldoret</p>
+                    <p><strong>Phone:</strong> +254 700 234 567</p>
+                    <p><strong>Hours:</strong> 6 AM - 7 PM Daily</p>
+                    <a href="#" class="btn btn-outline btn-sm">Get Directions</a>
+                </div>
+                <div class="location-card">
+                    <h3>Kitale Office</h3>
+                    <p><strong>Location:</strong> Kitale Trans Nzoia Building, Main Street, Kitale</p>
+                    <p><strong>Phone:</strong> +254 700 345 678</p>
+                    <p><strong>Hours:</strong> 6 AM - 7 PM Daily</p>
+                    <a href="#" class="btn btn-outline btn-sm">Get Directions</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-items">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I book a ticket online?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Use our booking widget at the top of this page. Select your departure town, destination, travel date, and number of passengers, then click "Check Availability." You'll see available trips and can proceed to payment via M-Pesa, card, or bank transfer.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What are your cancellation and refund policies?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Full refund if cancellation is made 24+ hours before departure. For cancellations within 24 hours, 50% refund may be applied. No refunds once a trip has begun. Reschedule to another trip for free within 30 days.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I send parcels via Great Rift Shuttle?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Yes! We offer secure parcel delivery across all our routes. Contact our office or call +254 700 123 456 for parcel rates. Rates vary by weight (KES 20-70 per kg depending on route) and contents are insured.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What happens if I miss my departure?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>If you miss your booked departure, you can reschedule to the next available trip at no extra charge, subject to availability. Contact us immediately if you're running late.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is the shuttle safe for families and children?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Absolutely. Our vehicles are certified PSVs with safety features, professional drivers, and insurance coverage. Children below 3 years travel free. We prioritize family safety and comfort on every journey.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I hire a shuttle for an event?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Yes! We offer shuttle hiring for corporate events, weddings, group tours, and team outings. Contact our office at +254 700 123 456 or email us to discuss your requirements and get a quote.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What payment methods do you accept?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>We accept M-Pesa, credit/debit cards, bank transfers, and cash payments at our offices. Online payments are secure and encrypted.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Travel?</h2>
+            <p>Choose from over 15 routes across Kenya's Rift Valley and Western regions</p>
+            <div class="cta-buttons">
+                <a href="#booking" class="btn btn-primary btn-lg">Book a Trip Now</a>
+                <a href="#parcel-service" class="btn btn-secondary btn-lg">Send a Parcel</a>
+                <a href="#contact" class="btn btn-outline btn-lg">Hire a Shuttle</a>
+                <a href="tel:+254700123456" class="btn btn-outline btn-lg">Call Us: +254 700 123 456</a>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        const bookingForm = document.querySelector('.booking-form');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you for booking! Proceed to payment details.');
+            });
+        }
+    </script>
+
+<%- include('footer') %>

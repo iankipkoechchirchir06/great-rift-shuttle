@@ -1,0 +1,331 @@
+<% const title = 'Dashboard - Great Rift Shuttle'; %>
+<%- include('dashboard-header') %>
+
+<div class="dashboard-wrapper">
+  <!-- Sidebar Navigation -->
+  <%- include('dashboard-aside', { activePage: 'overview' }) %>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+      <h1 id="sectionTitle">Welcome, <%= user.username %>!</h1>
+      <div class="header-actions">
+        <button class="btn btn-primary btn-sm">+ New Booking</button>
+        <button class="btn btn-secondary btn-sm">Browse Routes</button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         OVERVIEW SECTION
+         ========================================== -->
+    <section id="overview" class="dashboard-section active">
+      <!-- Quick Stats -->
+      <div class="stats-container">
+        <div class="stat-card">
+          <span class="stat-icon">🎫</span>
+          <p class="stat-label">Total Bookings</p>
+          <p class="stat-value">12</p>
+          <p class="stat-subtitle">All time</p>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-icon">✅</span>
+          <p class="stat-label">Completed Trips</p>
+          <p class="stat-value">10</p>
+          <p class="stat-subtitle">Successfully traveled</p>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-icon">⏳</span>
+          <p class="stat-label">Upcoming Trips</p>
+          <p class="stat-value">2</p>
+          <p class="stat-subtitle">Next 30 days</p>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-icon">💰</span>
+          <p class="stat-label">Total Spent</p>
+          <p class="stat-value">KES 8,500</p>
+          <p class="stat-subtitle">All bookings</p>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="dashboard-card">
+        <h2>Recent Activity</h2>
+        <div class="item-list">
+          <div class="item-card">
+            <div class="item-info">
+              <h4>Nairobi → Kisumu</h4>
+              <div class="item-details">
+                <span class="item-detail"><strong>Date:</strong> 2026-05-10</span>
+                <span class="item-detail"><strong>Amount:</strong> KES 900</span>
+                <span class="badge badge-success">Completed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-card">
+            <div class="item-info">
+              <h4>Eldoret → Nairobi</h4>
+              <div class="item-details">
+                <span class="item-detail"><strong>Date:</strong> 2026-05-15</span>
+                <span class="item-detail"><strong>Amount:</strong> KES 1,200</span>
+                <span class="badge badge-warning">Upcoming</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-card">
+            <div class="item-info">
+              <h4>Kitale → Eldoret</h4>
+              <div class="item-details">
+                <span class="item-detail"><strong>Date:</strong> 2026-05-05</span>
+                <span class="item-detail"><strong>Amount:</strong> KES 600</span>
+                <span class="badge badge-success">Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MY TRIPS SECTION
+         ========================================== -->
+    <section id="trips" class="dashboard-section">
+      <div class="dashboard-card">
+        <h2>My Trips</h2>
+
+        <div class="card-controls">
+          <div class="search-box">
+            <input type="text" placeholder="Search trips..." />
+          </div>
+          <div class="filter-group">
+            <select>
+              <option>All Status</option>
+              <option>Completed</option>
+              <option>Upcoming</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="empty-state">
+          <div class="empty-state-icon">🚌</div>
+          <h3>Manage Your Trips</h3>
+          <p>View all your scheduled trips, track their status, and manage your bookings here. You'll see information about routes, times, seat numbers, and more.</p>
+          <button class="btn btn-primary">Browse Available Routes</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         BOOKINGS SECTION
+         ========================================== -->
+    <section id="bookings" class="dashboard-section">
+      <div class="dashboard-card">
+        <h2>Bookings</h2>
+
+        <div class="card-controls">
+          <div class="search-box">
+            <input type="text" placeholder="Search bookings..." />
+          </div>
+          <div class="filter-group">
+            <select>
+              <option>All Bookings</option>
+              <option>Confirmed</option>
+              <option>Pending</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Route</th>
+              <th>Date</th>
+              <th>Seats</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>BK-0001</td>
+              <td>Nairobi → Kisumu</td>
+              <td>2026-05-10</td>
+              <td>2</td>
+              <td>KES 1,800</td>
+              <td><span class="badge badge-success">Completed</span></td>
+              <td><button class="btn btn-sm btn-outline">View</button></td>
+            </tr>
+            <tr>
+              <td>BK-0002</td>
+              <td>Eldoret → Nairobi</td>
+              <td>2026-05-15</td>
+              <td>1</td>
+              <td>KES 1,200</td>
+              <td><span class="badge badge-warning">Upcoming</span></td>
+              <td><button class="btn btn-sm btn-outline">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         ROUTES SECTION
+         ========================================== -->
+    <section id="routes" class="dashboard-section">
+      <div class="dashboard-card">
+        <h2>Available Routes</h2>
+
+        <div class="card-controls">
+          <div class="search-box">
+            <input type="text" placeholder="Search routes..." />
+          </div>
+          <div class="filter-group">
+            <select>
+              <option>All Routes</option>
+              <option>Popular</option>
+              <option>Recently Added</option>
+              <option>Best Price</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="empty-state">
+          <div class="empty-state-icon">🗺️</div>
+          <h3>Browse Available Routes</h3>
+          <p>Explore all available shuttle routes with departure times, prices, and estimated travel duration. Book your next trip by selecting a route below.</p>
+          <button class="btn btn-primary">View All Routes</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PAYMENTS SECTION
+         ========================================== -->
+    <section id="payments" class="dashboard-section">
+      <div class="dashboard-card">
+        <h2>Payment History</h2>
+
+        <div class="card-controls">
+          <div class="search-box">
+            <input type="text" placeholder="Search payments..." />
+          </div>
+          <div class="filter-group">
+            <select>
+              <option>All Payments</option>
+              <option>Completed</option>
+              <option>Pending</option>
+              <option>Failed</option>
+            </select>
+          </div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Booking ID</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>TXN-0001</td>
+              <td>BK-0001</td>
+              <td>KES 1,800</td>
+              <td>M-Pesa</td>
+              <td>2026-05-10</td>
+              <td><span class="badge badge-success">Completed</span></td>
+            </tr>
+            <tr>
+              <td>TXN-0002</td>
+              <td>BK-0002</td>
+              <td>KES 1,200</td>
+              <td>Card</td>
+              <td>2026-05-12</td>
+              <td><span class="badge badge-success">Completed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PROFILE SECTION
+         ========================================== -->
+    <section id="profile" class="dashboard-section">
+      <div class="dashboard-card">
+        <h2>My Profile</h2>
+
+        <div class="empty-state">
+          <div class="empty-state-icon">👤</div>
+          <h3>Profile Management</h3>
+          <p>View and edit your personal information, contact details, and profile settings. Update your preferences and manage your account here.</p>
+          <button class="btn btn-primary">Edit Profile</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SETTINGS SECTION
+         ========================================== -->
+    <section id="settings" class="dashboard-section">
+      <div class="dashboard-card">
+        <h2>Account Settings</h2>
+
+        <div class="empty-state">
+          <div class="empty-state-icon">⚙️</div>
+          <h3>Settings & Preferences</h3>
+          <p>Manage your account preferences, notification settings, security options, and other account-related configurations.</p>
+          <button class="btn btn-primary">Open Settings</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  function switchSection(event, sectionId) {
+    event.preventDefault();
+
+    // Hide all sections
+    document.querySelectorAll('.dashboard-section').forEach(section => {
+      section.classList.remove('active');
+    });
+
+    // Remove active class from all menu items
+    document.querySelectorAll('.dashboard-menu-item').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    // Show selected section
+    document.getElementById(sectionId).classList.add('active');
+    event.target.closest('.dashboard-menu-item').classList.add('active');
+
+    // Update header title
+    const titles = {
+      'overview': 'Welcome, <%= user.username %>!',
+      'trips': 'My Trips',
+      'bookings': 'My Bookings',
+      'routes': 'Available Routes',
+      'payments': 'Payment History',
+      'profile': 'My Profile',
+      'settings': 'Account Settings'
+    };
+    document.getElementById('sectionTitle').textContent = titles[sectionId] || 'Dashboard';
+  }
+</script>
+
+<%- include('dashboard-footer') %>

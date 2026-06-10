@@ -1,0 +1,75 @@
+<!-- Dashboard Sidebar Navigation -->
+<aside class="dashboard-sidebar" id="dashboardSidebar">
+  <!-- User Profile -->
+  <div class="sidebar-profile">
+    <div class="profile-avatar"><%= (user.username)[0].toUpperCase() %></div>
+    <div class="profile-info">
+      <h4><%= user.username %></h4>
+      <p>Passenger</p>
+    </div>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="dashboard-menu">
+    <a
+      href="/dashboard"
+      class="dashboard-menu-item<%= activePage === 'overview' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">📊</span>
+      <span class="menu-label">Overview</span>
+    </a>
+
+    <a
+      href="/trips"
+      class="dashboard-menu-item<%= activePage === 'trips' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">🚌</span>
+      <span class="menu-label">Manage Trips</span>
+    </a>
+
+    <a
+      href="/bookings"
+      class="dashboard-menu-item<%= activePage === 'bookings' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">🎫</span>
+      <span class="menu-label">Manage Bookings</span>
+    </a>
+
+    <a
+      href="/routes"
+      class="dashboard-menu-item<%= activePage === 'routes' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">🗺️</span>
+      <span class="menu-label">Manage Routes</span>
+    </a>
+
+    <a
+      href="/drivers"
+      class="dashboard-menu-item<%= activePage === 'drivers' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">👨‍💼</span>
+      <span class="menu-label">Manage Drivers</span>
+    </a>
+
+    <a
+      href="/vehicles"
+      class="dashboard-menu-item<%= activePage === 'vehicles' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">🚐</span>
+      <span class="menu-label">Manage Vehicles</span>
+    </a>
+
+    <a
+      href="/payments"
+      class="dashboard-menu-item<%= activePage === 'payments' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">💳</span>
+      <span class="menu-label">Manage Payments</span>
+    </a>
+
+    <a href="/logout" class="dashboard-menu-item logout-btn">
+      <span class="menu-icon">🚪</span>
+      <span class="menu-label">Logout</span>
+    </a>
+  </nav>
+</aside>

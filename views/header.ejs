@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Great Rift Shuttle - Your trusted journey across Kenya. Safe, reliable, and affordable shuttle services."
+    />
+    <title>
+      <%= typeof title !== 'undefined' ? title : 'Great Rift Shuttle' %>
+    </title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/dashboard.css" />
+  </head>
+  <body>
+    <!-- Navigation Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="/" style="text-decoration: none; color: inherit">
+              <h2>Great Rift Shuttle</h2>
+            </a>
+          </div>
+          <nav class="nav-menu">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/about" class="nav-link">About</a>
+            <a href="/#routes" class="nav-link">Routes & Fares</a>
+            <a href="/#services" class="nav-link">Services</a>
+            <a href="/#faq" class="nav-link">FAQuestions</a>
+            <a href="/contact" class="nav-link">Contact</a>
+          </nav>
+          <div class="header-cta">
+            <a href="/#booking" class="btn btn-primary btn-sm">Book Now</a>
+          </div>
+          <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="/" class="mobile-nav-link">Home</a>
+      <a href="/about" class="mobile-nav-link">About</a>
+      <a href="/#routes" class="mobile-nav-link">Routes & Fares</a>
+      <a href="/#services" class="mobile-nav-link">Services</a>
+      <a href="/#faq" class="mobile-nav-link">FAQ</a>
+      <a href="/contact" class="mobile-nav-link">Contact</a>
+      <a href="/#booking" class="mobile-nav-link btn btn-primary">Book Now</a>
+    </nav>
+
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      if (hamburger) {
+        hamburger.addEventListener("click", () => {
+          mobileMenu.classList.toggle("active");
+        });
+
+        document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.remove("active");
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

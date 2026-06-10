@@ -1,0 +1,76 @@
+<% const title = 'My Profile - Great Rift Shuttle'; %>
+<%- include('header') %>
+
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'profile' }) %>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <h1>My Profile</h1>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Profile Information</h2>
+
+      <div class="empty-state">
+        <div class="empty-state-icon">👤</div>
+        <h3>Manage Your Profile</h3>
+        <p>
+          Update your personal information, contact details, profile picture, and personal preferences.
+          Keep your profile information current for a better booking experience.
+        </p>
+        <p style="color: var(--text-light); font-size: 0.95rem; margin-top: var(--spacing-md);">
+          Features coming soon: edit name, email, phone number, profile picture, emergency contact,
+          ID verification, and profile preferences.
+        </p>
+        <button class="btn btn-primary" disabled style="margin-top: var(--spacing-md);">Edit Profile (Coming Soon)</button>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Account Information</h2>
+      <div class="item-list">
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Username</h4>
+            <div class="item-details">
+              <span class="item-detail"><strong><%= user.username %></strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Account Status</h4>
+            <div class="item-details">
+              <span class="item-detail">
+                <span class="badge badge-success">Active</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Member Since</h4>
+            <div class="item-details">
+              <span class="item-detail"><strong>2026-01-15</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card">
+          <div class="item-info">
+            <h4>Total Trips Completed</h4>
+            <div class="item-details">
+              <span class="item-detail"><strong>10 trips</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<%- include('footer') %>

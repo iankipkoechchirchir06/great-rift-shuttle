@@ -1,0 +1,114 @@
+<% const title = 'Browse Routes - Great Rift Shuttle'; %>
+<%- include('dashboard-header') %>
+
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'routes' }) %>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <div>
+        <h1>Available Routes</h1>
+        <% if(addSuccess){ %>
+          <div class="alert alert-success" style="color: green; background-color: aliceblue;">
+            Route added successfully!
+          </div>
+        <% } %>
+      </div>
+      <button class="btn btn-primary" onclick="openAddRouteModal()">+ Add New Route</button>
+    </div>
+
+    <!-- Add Route Modal -->
+    <div id="addRouteModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add New Route</h2>
+          <button class="modal-close" onclick="closeAddRouteModal()">&times;</button>
+        </div>
+        <form action="/add-route" method="post" class="modal-form">
+          <div class="group">
+            <label for="origin">Origin</label>
+            <input type="text" id="origin" name="origin" required />
+          </div>
+
+          <div class="group">
+            <label for="destination">Destination</label>
+            <input type="text" id="destination" name="destination" required />
+          </div>
+
+          <div class="group">
+            <label for="base-price">Base Price</label>
+            <input type="number" id="base-price" name="base_price" step="0.01" required />
+          </div>
+
+          <div class="group">
+            <label for="distance">Distance (km)</label>
+            <input type="number" id="distance" name="distance_km" required />
+          </div>
+
+          <div class="group">
+            <label for="duration">Estimated Duration (hours)</label>
+            <input type="number" id="duration" name="estimated_duration" required />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeAddRouteModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add Route</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Browse Routes</h2>
+
+      <div class="card-controls">
+        <div class="search-box">
+          <input type="text" placeholder="Search routes by origin or destination..." />
+        </div>
+        <div class="filter-group">
+          <select>
+            <option>All Routes</option>
+            <option>Popular Routes</option>
+            <option>Recently Added</option>
+            <option>Best Price</option>
+            <option>Shortest Duration</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="routes-list">
+
+      <!-- origin, destination, base_price, distance_km, estimated_duration in a tables -->
+
+        <table class="routes-table">
+          <thead>
+            <tr>
+              <th>Origin</th>
+              <th>Destination</th>
+              <th>Base Price</th>
+              <th>Distance (km)</th>
+              <th>Estimated Duration (hours)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% routes.reverse().forEach(route => { %>
+              <tr>
+                <td><%= route.origin %></td>
+                <td><%= route.destination %></td>
+                <td>KES. <%= route.base_price %></td>
+                <td><%= route.distance_km %> km</td>
+                <td><%= route.estimated_duration %> hours</td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+
+      </div>
+
+    
+    </div>
+  </main>
+</div>
+
+<%- include('dashboard-footer') %>

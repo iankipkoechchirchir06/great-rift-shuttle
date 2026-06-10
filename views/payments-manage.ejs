@@ -1,0 +1,134 @@
+<% const title = 'Payment History - Great Rift Shuttle'; %>
+<%- include('dashboard-header') %>
+
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'payments' }) %>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <h1>Payment History</h1>
+    </div>
+
+    <div class="stats-container">
+      <div class="stat-card">
+        <span class="stat-icon">💰</span>
+        <p class="stat-label">Total Spent</p>
+        <p class="stat-value">KES 8,500</p>
+        <p class="stat-subtitle">All time</p>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-icon">✅</span>
+        <p class="stat-label">Completed Payments</p>
+        <p class="stat-value">10</p>
+        <p class="stat-subtitle">Successful transactions</p>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-icon">⏳</span>
+        <p class="stat-label">Pending Payments</p>
+        <p class="stat-value">0</p>
+        <p class="stat-subtitle">Awaiting confirmation</p>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-icon">🎯</span>
+        <p class="stat-label">Payment Methods</p>
+        <p class="stat-value">3</p>
+        <p class="stat-subtitle">M-Pesa, Card, Bank</p>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Transaction History</h2>
+
+      <div class="card-controls">
+        <div class="search-box">
+          <input type="text" placeholder="Search transactions by ID or amount..." />
+        </div>
+        <div class="filter-group">
+          <select>
+            <option>All Payments</option>
+            <option>Completed</option>
+            <option>Pending</option>
+            <option>Failed</option>
+          </select>
+        </div>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Booking ID</th>
+            <th>Amount</th>
+            <th>Payment Method</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Receipt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TXN-0001</td>
+            <td>BK-0001</td>
+            <td>KES 1,800</td>
+            <td>M-Pesa</td>
+            <td>2026-05-10</td>
+            <td><span class="badge badge-success">Completed</span></td>
+            <td><button class="btn btn-sm btn-outline">Download</button></td>
+          </tr>
+          <tr>
+            <td>TXN-0002</td>
+            <td>BK-0002</td>
+            <td>KES 1,200</td>
+            <td>Card</td>
+            <td>2026-05-12</td>
+            <td><span class="badge badge-success">Completed</span></td>
+            <td><button class="btn btn-sm btn-outline">Download</button></td>
+          </tr>
+          <tr>
+            <td>TXN-0003</td>
+            <td>BK-0003</td>
+            <td>KES 900</td>
+            <td>M-Pesa</td>
+            <td>2026-05-08</td>
+            <td><span class="badge badge-success">Completed</span></td>
+            <td><button class="btn btn-sm btn-outline">Download</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Payment Methods -->
+    <div class="dashboard-card">
+      <h2>Saved Payment Methods</h2>
+      <div class="item-list">
+        <div class="item-card">
+          <div class="item-info">
+            <h4>📱 M-Pesa Account</h4>
+            <div class="item-details">
+              <span class="item-detail"><strong>Number:</strong> 0701234567</span>
+              <span class="item-detail"><strong>Status:</strong> <span class="badge badge-success">Active</span></span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline">Edit</button>
+        </div>
+
+        <div class="item-card">
+          <div class="item-info">
+            <h4>💳 Debit Card</h4>
+            <div class="item-details">
+              <span class="item-detail"><strong>Card:</strong> **** **** **** 4567</span>
+              <span class="item-detail"><strong>Expiry:</strong> 12/2027</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-outline">Edit</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<%- include('dashboard-footer') %>

@@ -1,0 +1,181 @@
+<% const title = 'Manage Trips - Great Rift Shuttle'; %>
+<%- include('dashboard-header') %>
+
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'trips' }) %>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <h1>My Trips</h1>
+      <div class="header-actions">
+        <button class="btn btn-primary">+ Create New Trip</button>
+      </div>
+    </div>
+    <!-- Add Trip Modal -->
+    <div id="newTripModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Create New Trip</h2>
+          <button class="modal-close" onclick="closeNewTripModal()">&times;</button>
+        </div>
+        <form id="newTripForm" method="POST" action="/add-trip" class="modal-form">
+          <div class="group">
+            <label for="driverSelect">Driver</label>
+            <select id="driverSelect" name="driver_id" required>
+              <option value="">-- Choose Driver --</option>
+              <% drivers.forEach(driver => { %>
+                <option value="<%= driver.driver_id %>"><%= driver.first_name %> <%= driver.last_name %></option>
+              <% }); %>
+            </select>
+          </div>
+
+          <div class="group">
+            <label for="routeSelect">Route</label>
+            <select id="routeSelect" name="route_id" required>
+              <option value="">-- Choose Route --</option>
+              <% routes.forEach(route => { %>
+                <option value="<%= route.route_id %>"><%= route.origin %> → <%= route.destination %></option>
+              <% }); %>
+            </select>
+          </div>
+
+          <div class="group">
+            <label for="vehicleSelect">Vehicle</label>
+            <select id="vehicleSelect" name="number_plate" required>
+              <option value="">-- Choose Vehicle --</option>
+              <% vehicles.forEach(vehicle => { %>
+                <option value="<%= vehicle.number_plate %>"><%= vehicle.model %> (<%= vehicle.number_plate %>)</option>
+              <% }); %>
+            </select>
+          </div>
+
+          <div class="group">
+            <label for="departureTime">Departure Time</label>
+            <input type="datetime-local" id="departureTime" name="departure_time" required />
+          </div>
+
+          <div class="group">
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+              <option value="scheduled">Scheduled</option>
+              <option value="en_route">En Route</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeNewTripModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create Trip</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Manage Your Trips</h2>
+
+      <div class="card-controls">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search trips by route or date..." />
+        </div>
+        <div class="filter-group">
+          <select id="statusFilter">
+            <option value="">All Status</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="en_route">En Route</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+
+      <% if (trips && trips.length > 0) { %>
+        <div class="trips-table-wrapper">
+          <table class="trips-table">
+            <thead>
+              <tr>
+                <th>Trip ID</th>
+                <th>Driver</th>
+                <th>Route</th>
+                <th>Vehicle</th>
+                <th>Departure</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tripsTableBody">
+              <% trips.forEach(trip => {
+                const driver = drivers.find(d => d.driver_id === trip.driver_id);
+                const route = routes.find(r => r.route_id === trip.route_id);
+                const vehicle = vehicles.find(v => v.number_plate === trip.number_plate);
+              %>
+                <tr class="trip-row" data-status="<%= trip.status %>" data-route="<%= route ? route.origin + ' → ' + route.destination : '' %>">
+                  <td><%= trip.trip_id %></td>
+                  <td><%= driver ? driver.first_name + ' ' + driver.last_name : 'N/A' %></td>
+                  <td><%= route ? route.origin + ' → ' + route.destination : 'N/A' %></td>
+                  <td><%= vehicle ? vehicle.model + ' (' + vehicle.number_plate + ')' : 'N/A' %></td>
+                  <td><%= trip.departure_time ? new Date(trip.departure_time).toLocaleString() : 'N/A' %></td>
+                  <td><span class="status-badge status-<%= trip.status %>"><%= trip.status.charAt(0).toUpperCase() + trip.status.slice(1).replace('_', ' ') %></span></td>
+                  <td>
+                    <a href="/update-trip-status?tripId=<%= trip.trip_id %>&status=en_route" class="btn btn-sm btn-warning" <% if (trip.status !== 'scheduled') { %>style="display:none;"<% } %>>Start</a>
+                    <a href="/update-trip-status?tripId=<%= trip.trip_id %>&status=completed" class="btn btn-sm btn-success" <% if (trip.status !== 'en_route') { %>style="display:none;"<% } %>>Complete</a>
+                    <a href="/delete-trip?tripId=<%= trip.trip_id %>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } else { %>
+        <p class="empty-state">No trips found. <a href="#" onclick="openNewTripModal()">Create your first trip</a></p>
+      <% } %>
+    </div>
+
+    <script>
+      function openNewTripModal() {
+        document.getElementById('newTripModal').classList.add('show');
+      }
+
+      function closeNewTripModal() {
+        document.getElementById('newTripModal').classList.remove('show');
+      }
+
+      document.querySelector('.btn-primary').addEventListener('click', openNewTripModal);
+
+      window.addEventListener('click', (event) => {
+        const modal = document.getElementById('newTripModal');
+        if (event.target === modal) {
+          closeNewTripModal();
+        }
+      });
+
+      // Search and filter functionality
+      const searchInput = document.getElementById('searchInput');
+      const statusFilter = document.getElementById('statusFilter');
+      const tripsTableBody = document.getElementById('tripsTableBody');
+
+      function filterTrips() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const statusValue = statusFilter.value;
+        const rows = tripsTableBody.querySelectorAll('tr');
+
+        rows.forEach(row => {
+          const status = row.dataset.status;
+          const route = row.dataset.route.toLowerCase();
+
+          const matchesSearch = route.includes(searchTerm) || row.textContent.toLowerCase().includes(searchTerm);
+          const matchesStatus = !statusValue || status === statusValue;
+
+          row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+        });
+      }
+
+      searchInput.addEventListener('input', filterTrips);
+      statusFilter.addEventListener('change', filterTrips);
+    </script>
+  </main>
+</div>
+
+<%- include('dashboard-footer') %>

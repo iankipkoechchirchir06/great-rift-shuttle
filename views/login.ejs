@@ -1,0 +1,389 @@
+﻿<% const title = 'Login - Great Rift Shuttle Admin & Driver Portal'; %> <%-
+include('header') %>
+
+<!-- Login Page -->
+<section class="auth-container">
+  <div class="auth-form-wrapper">
+    <div class="auth-form-card">
+      <h1>Login</h1>
+      <p class="auth-subtitle">Access your Great Rift Shuttle account</p>
+
+      <!-- Tab Navigation -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab(event, 'admin')">
+          Admin Portal
+        </button>
+        <button class="auth-tab" onclick="switchTab(event, 'driver')">
+          Driver Portal
+        </button>
+      </div>
+
+      <!-- Admin Login Form -->
+      <form
+        id="admin-form"
+        class="auth-form active-form"
+        method="POST"
+        action="/login"
+      >
+        <div class="form-group">
+          <label for="admin-username">Username</label>
+          <input
+            type="text"
+            id="admin-username"
+            name="username"
+            required
+            placeholder="Enter your username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="admin-password">Password</label>
+          <input
+            type="password"
+            id="admin-password"
+            name="password"
+            required
+            placeholder="Enter your password"
+          />
+          <button id="show-password">show</button>
+        </div>
+        <div class="form-group checkbox">
+          <input type="checkbox" id="admin-remember" name="remember" />
+          <label for="admin-remember">Remember me</label>
+        </div>
+        <input type="hidden" name="role" value="admin" />
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg"
+          style="width: 100%"
+        >
+          Login as Admin
+        </button>
+        <p class="auth-link">
+          Don''t have an account? <a href="/register/admin">Register here</a>
+        </p>
+      </form>
+
+      <!-- Driver Login Form -->
+      <form id="driver-form" class="auth-form" method="POST" action="/login">
+        <div class="form-group">
+          <label for="driver-id">Driver ID or License Number</label>
+          <input
+            type="text"
+            id="driver-id"
+            name="driver_id"
+            required
+            placeholder="Enter your driver ID"
+          />
+        </div>
+        <div class="form-group">
+          <label for="driver-password">Password</label>
+          <input
+            type="password"
+            id="driver-password"
+            name="password"
+            required
+            placeholder="Enter your password"
+          />
+        </div>
+        <div class="form-group checkbox">
+          <input type="checkbox" id="driver-remember" name="remember" />
+          <label for="driver-remember">Remember me</label>
+        </div>
+        <input type="hidden" name="role" value="driver" />
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg"
+          style="width: 100%"
+        >
+          Login as Driver
+        </button>
+        <p class="auth-link">
+          Don''t have an account? <a href="/register/driver">Register here</a>
+        </p>
+      </form>
+
+      <div class="auth-divider">
+        <span>or</span>
+      </div>
+
+      <p class="auth-help-text">
+        <strong>Forgot your password?</strong><br />
+        Contact our support team at +254 700 123 456 or email
+        info@greatriftshuttle.com
+      </p>
+    </div>
+
+    <!-- Info Card -->
+    <div class="auth-info-card">
+      <h3>New to Great Rift Shuttle?</h3>
+      <p>Join our team or access customer services.</p>
+      <ul class="auth-features">
+        <li>✓ Easy booking and tracking</li>
+        <li>✓ Real-time updates</li>
+        <li>✓ Secure payments</li>
+        <li>✓ 24/7 support</li>
+      </ul>
+      <a href="/" class="btn btn-outline" style="width: 100%">Back to Home</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .auth-container {
+    padding: 3rem var(--spacing-md);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      var(--primary-color) 0%,
+      var(--secondary-color) 100%
+    );
+    margin-top: 60px;
+  }
+
+  .auth-form-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .auth-form-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .auth-form-card h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+  }
+
+  .auth-subtitle {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .auth-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .auth-tab {
+    flex: 1;
+    padding: var(--spacing-md);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: var(--transition);
+  }
+
+  .auth-tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+  }
+
+  .auth-tab:hover {
+    color: var(--primary-color);
+  }
+
+  .auth-form {
+    display: none;
+  }
+
+  .auth-form.active-form {
+    display: block;
+  }
+
+  .auth-form .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .auth-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+
+  .auth-form input[type="email"],
+  .auth-form input[type="password"],
+  .auth-form input[type="text"] {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+  }
+
+  .auth-form input[type="email"]:focus,
+  .auth-form input[type="password"]:focus,
+  .auth-form input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(30, 95, 143, 0.1);
+  }
+
+  .auth-form .checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .auth-form .checkbox input[type="checkbox"] {
+    width: auto;
+  }
+
+  .auth-form .checkbox label {
+    margin-bottom: 0;
+  }
+
+  .auth-divider {
+    text-align: center;
+    margin: var(--spacing-lg) 0;
+    position: relative;
+  }
+
+  .auth-divider span {
+    background-color: white;
+    padding: 0 var(--spacing-sm);
+    color: var(--text-light);
+    font-weight: 600;
+  }
+
+  .auth-divider::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background-color: var(--border-color);
+    z-index: -1;
+  }
+
+  .auth-link {
+    text-align: center;
+    margin-top: var(--spacing-md);
+    color: var(--text-light);
+  }
+
+  .auth-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .auth-link a:hover {
+    text-decoration: underline;
+  }
+
+  .auth-help-text {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+  }
+
+  .auth-info-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .auth-info-card h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.5rem;
+  }
+
+  .auth-info-card p {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .auth-features {
+    list-style: none;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .auth-features li {
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+  }
+
+  .auth-info-card .btn-outline {
+    border-color: white;
+    color: white;
+    margin-top: auto;
+  }
+
+  .auth-info-card .btn-outline:hover {
+    background-color: white;
+    color: var(--primary-color);
+  }
+
+  @media (max-width: 768px) {
+    .auth-form-wrapper {
+      grid-template-columns: 1fr;
+    }
+
+    .auth-info-card {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function switchTab(event, tabName) {
+    event.preventDefault();
+
+    // Hide all forms
+    document.querySelectorAll(".auth-form").forEach((form) => {
+      form.classList.remove("active-form");
+    });
+
+    // Remove active class from all tabs
+    document.querySelectorAll(".auth-tab").forEach((tab) => {
+      tab.classList.remove("active");
+    });
+
+    // Show selected form
+    document.getElementById(tabName + "-form").classList.add("active-form");
+    event.target.classList.add("active");
+  }
+
+  document
+    .getElementById("show-password")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      const passwordInput = document.getElementById("admin-password");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        this.textContent = "hide";
+      } else {
+        passwordInput.type = "password";
+        this.textContent = "show";
+      }
+    });
+</script>
+
+<%- include('footer') %>
