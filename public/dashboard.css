@@ -177,6 +177,25 @@ tr:nth-child(even) {
   font-size: 1.8rem;
 }
 
+.alert {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  font-weight: 500;
+}
+
+.alert-success {
+  color: #176b3a;
+  background-color: #e8f7ee;
+  border: 1px solid #a9dfbd;
+}
+
+.alert-error {
+  color: #8a1c1c;
+  background-color: #fdecec;
+  border: 1px solid #efb1b1;
+}
+
 .header-actions {
   display: flex;
   gap: var(--spacing-md);

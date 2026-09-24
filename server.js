@@ -12,6 +12,14 @@ const dbConn = mysql.createConnection({
   database: "greatriftshuttle",
 });
 const PORT = 3003;
+dbConn.query(
+  "ALTER TABLE drivers ADD COLUMN password_hash VARCHAR(255) NULL",
+  (err) => {
+    if (err && err.code !== "ER_DUP_FIELDNAME") {
+      console.error("Driver authentication schema error:", err);
+    }
+  },
+);
 app.use(
   session({
     secret: "qwertyuiopasdfghjklzxcvbnm", // should be a long, random string in production and stored securely
@@ -37,13 +45,43 @@ app.get("/contact", (req, res) => {
   res.render("contact.ejs");
 });
 app.get("/login", (req, res) => {
-  res.render("login.ejs");
+  res.render("login.ejs", { loginError: req.query.error || null });
 });
 app.post("/login", (req, res) => {
   // recievedlogin data - username,password,remember me
-  const { username, password, remember } = req.body;
+  const { username, password, role, id_number, license_number } = req.body;
+  if (role === "driver") {
+    return dbConn.query(
+      "SELECT driver_id, first_name, last_name, password_hash, status FROM drivers WHERE id_number = ? AND license_number = ?",
+      [String(id_number || "").trim(), String(license_number || "").trim()],
+      (err, results) => {
+        if (err) {
+          console.error("Database error:", err);
+          return res.status(500).send("Internal Server Error");
+        }
+        if (results.length === 0 || results[0].status !== "active") {
+          return res.redirect("/login?error=Invalid driver ID or license number.");
+        }
+        const driver = results[0];
+        if (!driver.password_hash) {
+          req.session.passwordSetupDriverId = driver.driver_id;
+          return res.redirect("/driver/set-password");
+        }
+        if (!password || !bcrypt.compareSync(password, driver.password_hash)) {
+          return res.redirect("/login?error=Invalid driver password.");
+        }
+        req.session.user = {
+          id: driver.driver_id,
+          username: `${driver.first_name} ${driver.last_name}`,
+          role: "driver",
+        };
+        return res.redirect("/dashboard");
+      },
+    );
+  }
   dbConn.query(
-    `SELECT * FROM admin_users WHERE username = "${username}"`,
+    "SELECT * FROM admin_users WHERE username = ?",
+    [username],
     (err, results) => {
       // check for mysql connection of sql statements errors
       if (err) {
@@ -60,11 +98,60 @@ app.post("/login", (req, res) => {
       const user = results[0];
       if (bcrypt.compareSync(password, user.password_hash)) {
         // use hashed passwords and a secure comparison method - bcrypt
-        req.session.user = { id: user.id, username: user.username }; // store user info in session- signing user info in a session cookie to maintain authentication state across requests
+        req.session.user = {
+          id: user.admin_id,
+          username: user.username,
+          role: "admin",
+        }; // store user info in session- signing user info in a session cookie to maintain authentication state across requests
         res.redirect("/dashboard"); // redirect to dashboard on successful login
       } else {
         res.status(401).redirect("/login"); // redirect back to login on failed login attempt
       }
+    },
+  );
+});
+
+app.get("/driver/set-password", (req, res) => {
+  if (!req.session.passwordSetupDriverId) {
+    return res.redirect("/login");
+  }
+  res.render("driver-set-password.ejs", {
+    passwordError: req.query.error || null,
+  });
+});
+
+app.post("/driver/set-password", (req, res) => {
+  const driverId = req.session.passwordSetupDriverId;
+  const { password, confirm_password } = req.body;
+  if (!driverId) {
+    return res.status(401).redirect("/login");
+  }
+  if (
+    !password ||
+    password.length < 8 ||
+    password !== confirm_password ||
+    !/[A-Z]/.test(password) ||
+    !/[a-z]/.test(password) ||
+    !/[0-9]/.test(password)
+  ) {
+    return res.redirect(
+      "/driver/set-password?error=Password must be 8+ characters with uppercase, lowercase, and a number.",
+    );
+  }
+  dbConn.query(
+    "UPDATE drivers SET password_hash = ? WHERE driver_id = ? AND password_hash IS NULL",
+    [bcrypt.hashSync(password, 10), driverId],
+    (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      if (result.affectedRows !== 1) {
+        return res.redirect("/login?error=Password setup has already been completed.");
+      }
+      req.session.destroy(() =>
+        res.redirect("/login?error=Password created. Please log in."),
+      );
     },
   );
 });
@@ -108,7 +195,7 @@ app.post("/register/admin", (req, res) => {
   }
 });
 app.get("/register/driver", (req, res) => {
-  if (req.session && req.session.user) {
+  if (req.session && req.session.user && req.session.user.role === "admin") {
     res.render("registerdriver.ejs");
   } else {
     res.status(401).send("Not Allowed / Unauthorized ");
@@ -158,10 +245,128 @@ app.get("/trips", (req, res) => {
 
 app.get("/bookings", (req, res) => {
   if (req.session && req.session.user) {
-    res.render("bookings-manage.ejs");
+    const tripsQuery = `
+      SELECT
+        t.trip_id,
+        t.departure_time,
+        r.origin,
+        r.destination,
+        v.capacity,
+        COUNT(b.booking_id) AS booked_seats
+      FROM trips t
+      JOIN routes r ON r.route_id = t.route_id
+      JOIN vehicles v ON v.number_plate = t.number_plate
+      LEFT JOIN bookings b ON b.trip_id = t.trip_id
+      WHERE t.status = 'scheduled' AND t.departure_time > NOW()
+      GROUP BY t.trip_id, t.departure_time, r.origin, r.destination, v.capacity
+      ORDER BY t.departure_time
+    `;
+    const bookingsQuery = `
+      SELECT
+        b.booking_id,
+        b.client_name,
+        b.client_phone,
+        b.client_email,
+        b.seat_number,
+        b.booking_date,
+        b.payment_status,
+        t.departure_time,
+        r.origin,
+        r.destination
+      FROM bookings b
+      JOIN trips t ON t.trip_id = b.trip_id
+      JOIN routes r ON r.route_id = t.route_id
+      ORDER BY b.booking_date DESC
+    `;
+
+    dbConn.query(tripsQuery, (tripsErr, trips) => {
+      if (tripsErr) {
+        console.error("Database error:", tripsErr);
+        return res.status(500).send("Internal Server Error");
+      }
+      dbConn.query(bookingsQuery, (bookingsErr, bookings) => {
+        if (bookingsErr) {
+          console.error("Database error:", bookingsErr);
+          return res.status(500).send("Internal Server Error");
+        }
+        res.render("bookings-manage.ejs", {
+          trips,
+          bookings,
+          bookingError: req.query.error || null,
+          bookingSuccess: req.query.success === "true",
+        });
+      });
+    });
   } else {
     res.status(401).redirect("/login");
   }
+});
+
+app.post("/add-booking", (req, res) => {
+  if (!(req.session && req.session.user)) {
+    return res.status(401).redirect("/login");
+  }
+
+  const { trip_id, client_name, client_phone, client_email, seat_number } =
+    req.body;
+  const tripId = Number.parseInt(trip_id, 10);
+  const seatNumber = Number.parseInt(seat_number, 10);
+
+  if (
+    !Number.isInteger(tripId) ||
+    !client_name ||
+    !client_phone ||
+    !Number.isInteger(seatNumber) ||
+    seatNumber < 1
+  ) {
+    return res.redirect("/bookings?error=Enter all required booking details.");
+  }
+
+  const tripQuery = `
+    SELECT t.trip_id, v.capacity
+    FROM trips t
+    JOIN vehicles v ON v.number_plate = t.number_plate
+    WHERE t.trip_id = ? AND t.status = 'scheduled' AND t.departure_time > NOW()
+  `;
+
+  dbConn.query(tripQuery, [tripId], (tripErr, tripResults) => {
+    if (tripErr) {
+      console.error("Database error:", tripErr);
+      return res.status(500).send("Internal Server Error");
+    }
+    if (tripResults.length === 0 || seatNumber > tripResults[0].capacity) {
+      return res.redirect("/bookings?error=That trip is unavailable or the seat number is invalid.");
+    }
+
+    const seatQuery =
+      "SELECT booking_id FROM bookings WHERE trip_id = ? AND seat_number = ?";
+    dbConn.query(seatQuery, [tripId, seatNumber], (seatErr, seatResults) => {
+      if (seatErr) {
+        console.error("Database error:", seatErr);
+        return res.status(500).send("Internal Server Error");
+      }
+      if (seatResults.length > 0) {
+        return res.redirect("/bookings?error=That seat is already booked for this trip.");
+      }
+
+      const insertQuery = `
+        INSERT INTO bookings
+          (trip_id, client_name, client_phone, client_email, seat_number)
+        VALUES (?, ?, ?, ?, ?)
+      `;
+      dbConn.query(
+        insertQuery,
+        [tripId, client_name.trim(), client_phone.trim(), client_email || null, seatNumber],
+        (insertErr) => {
+          if (insertErr) {
+            console.error("Database error:", insertErr);
+            return res.status(500).send("Internal Server Error");
+          }
+          res.redirect("/bookings?success=true");
+        },
+      );
+    });
+  });
 });
 
 app.get("/routes", (req, res) => {
@@ -218,7 +423,7 @@ app.get("/drivers", (req, res) => {
 });
 
 app.post("/add-driver", (req, res) => {
-  if (req.session && req.session.user) {
+  if (req.session && req.session.user && req.session.user.role === "admin") {
     const {
       first_name,
       last_name,

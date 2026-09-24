@@ -7,6 +7,9 @@ include('header') %>
     <div class="auth-form-card">
       <h1>Login</h1>
       <p class="auth-subtitle">Access your Great Rift Shuttle account</p>
+      <% if (loginError) { %>
+        <p class="alert alert-error"><%= loginError %></p>
+      <% } %>
 
       <!-- Tab Navigation -->
       <div class="auth-tabs">
@@ -66,13 +69,23 @@ include('header') %>
       <!-- Driver Login Form -->
       <form id="driver-form" class="auth-form" method="POST" action="/login">
         <div class="form-group">
-          <label for="driver-id">Driver ID or License Number</label>
+          <label for="driver-id">National ID Number</label>
           <input
             type="text"
             id="driver-id"
-            name="driver_id"
+            name="id_number"
             required
-            placeholder="Enter your driver ID"
+            placeholder="Enter your ID number"
+          />
+        </div>
+        <div class="form-group">
+          <label for="driver-license">Driving License Number</label>
+          <input
+            type="text"
+            id="driver-license"
+            name="license_number"
+            required
+            placeholder="Enter your license number"
           />
         </div>
         <div class="form-group">
@@ -81,8 +94,7 @@ include('header') %>
             type="password"
             id="driver-password"
             name="password"
-            required
-            placeholder="Enter your password"
+            placeholder="Password (only after first setup)"
           />
         </div>
         <div class="form-group checkbox">
@@ -98,7 +110,7 @@ include('header') %>
           Login as Driver
         </button>
         <p class="auth-link">
-          Don''t have an account? <a href="/register/driver">Register here</a>
+          Driver accounts are created by an administrator.
         </p>
       </form>
 

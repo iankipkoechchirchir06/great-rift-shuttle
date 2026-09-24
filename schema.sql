@@ -30,6 +30,7 @@ CREATE TABLE drivers (
     id_number VARCHAR(20) UNIQUE NOT NULL, -- National ID or Passport
     phone_number VARCHAR(20) UNIQUE NOT NULL,
     license_number VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255),
     license_expiry_date DATE NOT NULL,
     driver_photo_url VARCHAR(200),
     date_joined DATE DEFAULT (CURRENT_DATE),

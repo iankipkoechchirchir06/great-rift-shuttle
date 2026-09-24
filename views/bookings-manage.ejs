@@ -7,14 +7,65 @@
   <!-- Main Content -->
   <main class="dashboard-main">
     <div class="dashboard-header">
-      <h1>My Bookings</h1>
+      <h1>Manage Bookings</h1>
       <div class="header-actions">
-        <a href="/routes" class="btn btn-primary btn-sm">+ New Booking</a>
+        <button class="btn btn-primary btn-sm" type="button" onclick="openBookingModal()">+ New Booking</button>
+      </div>
+    </div>
+
+    <% if (bookingSuccess) { %>
+      <div class="alert alert-success">Booking created successfully.</div>
+    <% } %>
+    <% if (bookingError) { %>
+      <div class="alert alert-error"><%= bookingError %></div>
+    <% } %>
+
+    <div id="newBookingModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Book a Trip</h2>
+          <button class="modal-close" type="button" onclick="closeBookingModal()">&times;</button>
+        </div>
+        <form action="/add-booking" method="post" class="modal-form">
+          <div class="group">
+            <label for="tripId">Trip</label>
+            <select id="tripId" name="trip_id" required>
+              <option value="">-- Choose Trip --</option>
+              <% trips.forEach(trip => { %>
+                <option value="<%= trip.trip_id %>">
+                  <%= trip.origin %> → <%= trip.destination %> |
+                  <%= new Date(trip.departure_time).toLocaleString() %> |
+                  <%= trip.capacity - trip.booked_seats %> seats left
+                </option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="group">
+            <label for="seatNumber">Seat Number</label>
+            <input type="number" id="seatNumber" name="seat_number" min="1" required />
+          </div>
+          <div class="group">
+            <label for="clientName">Passenger Name</label>
+            <input type="text" id="clientName" name="client_name" required />
+          </div>
+          <div class="group">
+            <label for="clientPhone">Passenger Phone</label>
+            <input type="tel" id="clientPhone" name="client_phone" required />
+          </div>
+          <div class="group">
+            <label for="clientEmail">Passenger Email</label>
+            <input type="email" id="clientEmail" name="client_email" />
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" onclick="closeBookingModal()">Cancel</button>
+            <button class="btn btn-primary" type="submit">Create Booking</button>
+          </div>
+        </form>
       </div>
     </div>
 
     <div class="dashboard-card">
-      <h2>Manage Bookings</h2>
+      <h2>All Bookings</h2>
 
       <div class="card-controls">
         <div class="search-box">
@@ -31,21 +82,40 @@
         </div>
       </div>
 
-      <div class="empty-state">
-        <div class="empty-state-icon">🎫</div>
-        <h3>Manage Your Bookings</h3>
-        <p>
-          View all your shuttle bookings with detailed information including booking confirmation,
-          reservation dates, seat allocations, pricing details, and payment status.
-          Cancel, modify, or download booking confirmations.
-        </p>
-        <p style="color: var(--text-light); font-size: 0.95rem; margin-top: var(--spacing-md);">
-          Features coming soon: booking modifications, cancellation requests, e-tickets, and booking history.
-        </p>
-        <a href="/routes" class="btn btn-primary" style="margin-top: var(--spacing-md);">Book a New Trip</a>
+      <div class="trips-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr><th>ID</th><th>Passenger</th><th>Route</th><th>Departure</th><th>Seat</th><th>Payment</th></tr>
+          </thead>
+          <tbody>
+            <% if (bookings.length === 0) { %>
+              <tr><td colspan="6">No bookings found.</td></tr>
+            <% } %>
+            <% bookings.forEach(booking => { %>
+              <tr>
+                <td><%= booking.booking_id %></td>
+                <td><%= booking.client_name %><br><small><%= booking.client_phone %></small></td>
+                <td><%= booking.origin %> → <%= booking.destination %></td>
+                <td><%= new Date(booking.departure_time).toLocaleString() %></td>
+                <td><%= booking.seat_number %></td>
+                <td><%= booking.payment_status %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
       </div>
     </div>
   </main>
 </div>
+
+<script>
+  function openBookingModal() {
+    document.getElementById("newBookingModal").classList.add("show");
+  }
+
+  function closeBookingModal() {
+    document.getElementById("newBookingModal").classList.remove("show");
+  }
+</script>
 
 <%- include('dashboard-footer') %>
