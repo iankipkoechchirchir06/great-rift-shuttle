@@ -3,11 +3,15 @@
 <div class="dashboard-wrapper">
   <%- include('dashboard-aside', { activePage: 'driver-trips' }) %>
   <main class="dashboard-main">
-    <div class="dashboard-header"><h1>My Trips</h1></div>
+    <div class="dashboard-header">
+      <div><p class="driver-eyebrow">DRIVER PORTAL</p><h1>My trips</h1><p class="driver-header-subtitle">Your complete schedule and vehicle assignments.</p></div>
+      <a class="btn btn-outline btn-sm" href="/driverprofile">View profile</a>
+    </div>
     <div class="dashboard-card">
-      <div class="trips-table-wrapper"><table class="data-table"><thead><tr><th>Route</th><th>Departure</th><th>Vehicle</th><th>Status</th></tr></thead><tbody>
+      <div class="driver-card-heading"><div><p class="driver-eyebrow">SCHEDULE</p><h2>Trip assignments</h2></div><span class="driver-count"><%= trips.length %> total</span></div>
+      <div class="trips-table-wrapper"><table class="data-table driver-trips-table"><thead><tr><th>Route</th><th>Departure</th><th>Vehicle</th><th>Status</th></tr></thead><tbody>
         <% if (trips.length === 0) { %><tr><td colspan="4">No trips assigned.</td></tr><% } %>
-        <% trips.forEach(trip => { %><tr><td><%= trip.origin %> → <%= trip.destination %></td><td><%= new Date(trip.departure_time).toLocaleString() %></td><td><%= trip.model %> (<%= trip.number_plate %>)</td><td><span class="status-badge status-<%= trip.status %>"><%= trip.status %></span></td></tr><% }) %>
+        <% trips.forEach(trip => { %><tr><td><strong><%= trip.origin %></strong><span class="driver-route-arrow"> → </span><strong><%= trip.destination %></strong></td><td><%= new Date(trip.departure_time).toLocaleString() %></td><td><%= trip.model %><br><small><%= trip.number_plate %></small></td><td><span class="status-badge status-<%= trip.status %>"><%= trip.status.replace('_', ' ') %></span></td></tr><% }) %>
       </tbody></table></div>
     </div>
   </main>

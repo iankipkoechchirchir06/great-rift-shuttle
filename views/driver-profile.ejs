@@ -3,15 +3,15 @@
 <div class="dashboard-wrapper">
   <%- include('dashboard-aside', { activePage: 'driver-profile' }) %>
   <main class="dashboard-main">
-    <div class="dashboard-header"><h1>My Profile</h1></div>
+    <div class="dashboard-header"><div><p class="driver-eyebrow">DRIVER PORTAL</p><h1>My profile</h1><p class="driver-header-subtitle">Your verified account and license information.</p></div></div>
     <div class="dashboard-card">
-      <h2>Driver Information</h2>
-      <div class="item-list">
-        <div class="item-card"><div class="item-info"><h4>Name</h4><span class="item-detail"><%= driver.first_name %> <%= driver.last_name %></span></div></div>
-        <div class="item-card"><div class="item-info"><h4>National ID</h4><span class="item-detail"><%= driver.id_number %></span></div></div>
-        <div class="item-card"><div class="item-info"><h4>Phone</h4><span class="item-detail"><%= driver.phone_number %></span></div></div>
-        <div class="item-card"><div class="item-info"><h4>License</h4><span class="item-detail"><%= driver.license_number %> (expires <%= driver.license_expiry_date %>)</span></div></div>
-        <div class="item-card"><div class="item-info"><h4>Status</h4><span class="badge badge-success"><%= driver.status %></span></div></div>
+      <div class="driver-profile-hero"><div class="driver-profile-avatar"><%= driver.first_name[0] %><%= driver.last_name[0] %></div><div><p class="driver-eyebrow">VERIFIED DRIVER</p><h2><%= driver.first_name %> <%= driver.last_name %></h2><span class="badge badge-success"><%= driver.status %></span></div></div>
+      <div class="driver-profile-grid">
+        <div class="driver-detail"><span>National ID</span><strong><%= driver.id_number %></strong></div>
+        <div class="driver-detail"><span>Phone number</span><strong><%= driver.phone_number %></strong></div>
+        <div class="driver-detail"><span>License number</span><strong><%= driver.license_number %></strong></div>
+        <div class="driver-detail"><span>License expiry</span><strong><%= driver.license_expiry_date %></strong></div>
+        <div class="driver-detail"><span>Joined</span><strong><%= driver.date_joined %></strong></div>
       </div>
     </div>
   </main>
