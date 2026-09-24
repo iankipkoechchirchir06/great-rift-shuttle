@@ -1,0 +1,25 @@
+<% const title = 'Driver Dashboard - Great Rift Shuttle'; %>
+<%- include('dashboard-header') %>
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'driver-dashboard' }) %>
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <h1>Welcome, <%= user.username %></h1>
+      <a class="btn btn-primary btn-sm" href="/drivertrips">View My Trips</a>
+    </div>
+    <div class="stats-container">
+      <div class="stat-card"><span class="stat-icon">🚌</span><p class="stat-label">Assigned Trips</p><p class="stat-value"><%= trips.length %></p><p class="stat-subtitle">All trips</p></div>
+      <div class="stat-card"><span class="stat-icon">⏳</span><p class="stat-label">Upcoming Trips</p><p class="stat-value"><%= upcomingTrips.length %></p><p class="stat-subtitle">Scheduled departures</p></div>
+    </div>
+    <div class="dashboard-card">
+      <h2>Upcoming Assignments</h2>
+      <% if (upcomingTrips.length === 0) { %><p class="empty-state">No upcoming trips assigned.</p><% } %>
+      <div class="item-list">
+        <% upcomingTrips.slice(0, 5).forEach(trip => { %>
+          <div class="item-card"><div class="item-info"><h4><%= trip.origin %> → <%= trip.destination %></h4><div class="item-details"><span class="item-detail"><strong>Departure:</strong> <%= new Date(trip.departure_time).toLocaleString() %></span><span class="badge badge-info"><%= trip.status %></span></div></div></div>
+        <% }) %>
+      </div>
+    </div>
+  </main>
+</div>
+<%- include('dashboard-footer') %>

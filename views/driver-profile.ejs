@@ -1,0 +1,19 @@
+<% const title = 'My Driver Profile - Great Rift Shuttle'; %>
+<%- include('dashboard-header') %>
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'driver-profile' }) %>
+  <main class="dashboard-main">
+    <div class="dashboard-header"><h1>My Profile</h1></div>
+    <div class="dashboard-card">
+      <h2>Driver Information</h2>
+      <div class="item-list">
+        <div class="item-card"><div class="item-info"><h4>Name</h4><span class="item-detail"><%= driver.first_name %> <%= driver.last_name %></span></div></div>
+        <div class="item-card"><div class="item-info"><h4>National ID</h4><span class="item-detail"><%= driver.id_number %></span></div></div>
+        <div class="item-card"><div class="item-info"><h4>Phone</h4><span class="item-detail"><%= driver.phone_number %></span></div></div>
+        <div class="item-card"><div class="item-info"><h4>License</h4><span class="item-detail"><%= driver.license_number %> (expires <%= driver.license_expiry_date %>)</span></div></div>
+        <div class="item-card"><div class="item-info"><h4>Status</h4><span class="badge badge-success"><%= driver.status %></span></div></div>
+      </div>
+    </div>
+  </main>
+</div>
+<%- include('dashboard-footer') %>

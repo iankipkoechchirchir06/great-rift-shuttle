@@ -1,0 +1,15 @@
+<% const title = 'My Trips - Great Rift Shuttle'; %>
+<%- include('dashboard-header') %>
+<div class="dashboard-wrapper">
+  <%- include('dashboard-aside', { activePage: 'driver-trips' }) %>
+  <main class="dashboard-main">
+    <div class="dashboard-header"><h1>My Trips</h1></div>
+    <div class="dashboard-card">
+      <div class="trips-table-wrapper"><table class="data-table"><thead><tr><th>Route</th><th>Departure</th><th>Vehicle</th><th>Status</th></tr></thead><tbody>
+        <% if (trips.length === 0) { %><tr><td colspan="4">No trips assigned.</td></tr><% } %>
+        <% trips.forEach(trip => { %><tr><td><%= trip.origin %> → <%= trip.destination %></td><td><%= new Date(trip.departure_time).toLocaleString() %></td><td><%= trip.model %> (<%= trip.number_plate %>)</td><td><span class="status-badge status-<%= trip.status %>"><%= trip.status %></span></td></tr><% }) %>
+      </tbody></table></div>
+    </div>
+  </main>
+</div>
+<%- include('dashboard-footer') %>

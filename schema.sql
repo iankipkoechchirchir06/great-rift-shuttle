@@ -118,3 +118,23 @@ CREATE TABLE admin_users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 INSERT INTO admin_users(username,password_hash) VALUES ('ian','$2b$10$jdx8XyBl3Ph9rbr2NA/XCu0jJtrS9p1Prj8dsgWbTPShC2KuLGsLy');
+
+INSERT INTO drivers (
+    first_name,
+    last_name,
+    id_number,
+    phone_number,
+    license_number,
+    password_hash,
+    license_expiry_date,
+    status
+) VALUES (
+    'Demo',
+    'Driver',
+    '12345',
+    '0000000000',
+    '2345',
+    '$2b$10$jdx8XyBl3Ph9rbr2NA/XCu0jJtrS9p1Prj8dsgWbTPShC2KuLGsLy',
+    '2030-12-31',
+    'active'
+);

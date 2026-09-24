@@ -5,14 +5,37 @@
     <div class="profile-avatar"><%= (user.username)[0].toUpperCase() %></div>
     <div class="profile-info">
       <h4><%= user.username %></h4>
-      <p>Passenger</p>
+      <p><%= user.role === 'driver' ? 'Driver' : 'Administrator' %></p>
     </div>
   </div>
 
   <!-- Navigation Menu -->
   <nav class="dashboard-menu">
+    <% if (user.role === 'driver') { %>
     <a
-      href="/dashboard"
+      href="/driverdashboard"
+      class="dashboard-menu-item<%= activePage === 'driver-dashboard' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">📊</span>
+      <span class="menu-label">Driver Dashboard</span>
+    </a>
+    <a
+      href="/drivertrips"
+      class="dashboard-menu-item<%= activePage === 'driver-trips' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">🚌</span>
+      <span class="menu-label">My Trips</span>
+    </a>
+    <a
+      href="/driverprofile"
+      class="dashboard-menu-item<%= activePage === 'driver-profile' ? ' active' : '' %>"
+    >
+      <span class="menu-icon">👤</span>
+      <span class="menu-label">My Profile</span>
+    </a>
+    <% } else { %>
+    <a
+      href="/admindashboard"
       class="dashboard-menu-item<%= activePage === 'overview' ? ' active' : '' %>"
     >
       <span class="menu-icon">📊</span>
@@ -20,7 +43,7 @@
     </a>
 
     <a
-      href="/trips"
+      href="/admintrips"
       class="dashboard-menu-item<%= activePage === 'trips' ? ' active' : '' %>"
     >
       <span class="menu-icon">🚌</span>
@@ -28,7 +51,7 @@
     </a>
 
     <a
-      href="/bookings"
+      href="/adminbookings"
       class="dashboard-menu-item<%= activePage === 'bookings' ? ' active' : '' %>"
     >
       <span class="menu-icon">🎫</span>
@@ -36,7 +59,7 @@
     </a>
 
     <a
-      href="/routes"
+      href="/adminroutes"
       class="dashboard-menu-item<%= activePage === 'routes' ? ' active' : '' %>"
     >
       <span class="menu-icon">🗺️</span>
@@ -44,7 +67,7 @@
     </a>
 
     <a
-      href="/drivers"
+      href="/admindrivers"
       class="dashboard-menu-item<%= activePage === 'drivers' ? ' active' : '' %>"
     >
       <span class="menu-icon">👨‍💼</span>
@@ -52,7 +75,7 @@
     </a>
 
     <a
-      href="/vehicles"
+      href="/adminvehicles"
       class="dashboard-menu-item<%= activePage === 'vehicles' ? ' active' : '' %>"
     >
       <span class="menu-icon">🚐</span>
@@ -60,12 +83,13 @@
     </a>
 
     <a
-      href="/payments"
+      href="/adminpayments"
       class="dashboard-menu-item<%= activePage === 'payments' ? ' active' : '' %>"
     >
       <span class="menu-icon">💳</span>
       <span class="menu-label">Manage Payments</span>
     </a>
+    <% } %>
 
     <a href="/logout" class="dashboard-menu-item logout-btn">
       <span class="menu-icon">🚪</span>

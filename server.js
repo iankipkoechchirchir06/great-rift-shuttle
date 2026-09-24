@@ -51,7 +51,7 @@ app.post("/login", (req, res) => {
   // recievedlogin data - username,password,remember me
   const { username, password, role, id_number, license_number } = req.body;
   if (role === "driver") {
-    return dbConn.query(
+    dbConn.query(
       "SELECT driver_id, first_name, last_name, password_hash, status FROM drivers WHERE id_number = ? AND license_number = ?",
       [String(id_number || "").trim(), String(license_number || "").trim()],
       (err, results) => {
@@ -75,7 +75,7 @@ app.post("/login", (req, res) => {
           username: `${driver.first_name} ${driver.last_name}`,
           role: "driver",
         };
-        return res.redirect("/dashboard");
+        return res.redirect("/driverdashboard");
       },
     );
   }
@@ -103,7 +103,7 @@ app.post("/login", (req, res) => {
           username: user.username,
           role: "admin",
         }; // store user info in session- signing user info in a session cookie to maintain authentication state across requests
-        res.redirect("/dashboard"); // redirect to dashboard on successful login
+        res.redirect("/admindashboard"); // redirect to dashboard on successful login
       } else {
         res.status(401).redirect("/login"); // redirect back to login on failed login attempt
       }
@@ -162,21 +162,94 @@ app.get("/logout", (req, res) => {
   res.status(304).redirect("/login");
 });
 // Private Routes - only accessible to authenticated users
-app.get("/dashboard", (req, res) => {
+app.get("/admindashboard", (req, res) => {
   if (req.session && req.session.user) {
+    if (req.session.user.role === "driver") {
+      return res.redirect("/driverdashboard");
+    }
     res.render("dashboard.ejs"); // render user dashboard
   } else {
     res.status(401).redirect("/login"); // restrict access to dashboard for unauthenticated users
   }
 });
-app.get("/register/admin", (req, res) => {
+
+app.get("/driverdashboard", (req, res) => {
+  if (!req.session.user || req.session.user.role !== "driver") {
+    return res.status(403).redirect("/login");
+  }
+  const query = `
+    SELECT t.trip_id, t.departure_time, t.status, r.origin, r.destination,
+           v.model, v.number_plate
+    FROM trips t
+    JOIN routes r ON r.route_id = t.route_id
+    JOIN vehicles v ON v.number_plate = t.number_plate
+    WHERE t.driver_id = ?
+    ORDER BY t.departure_time DESC
+  `;
+  dbConn.query(query, [req.session.user.id], (err, trips) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).send("Internal Server Error");
+    }
+    res.render("driver-dashboard.ejs", {
+      trips,
+      upcomingTrips: trips.filter((trip) => new Date(trip.departure_time) > new Date()),
+    });
+  });
+});
+
+app.get("/drivertrips", (req, res) => {
+  if (!req.session.user || req.session.user.role !== "driver") {
+    return res.status(403).redirect("/login");
+  }
+  dbConn.query(
+    `SELECT t.trip_id, t.departure_time, t.status, r.origin, r.destination,
+            v.model, v.number_plate
+     FROM trips t
+     JOIN routes r ON r.route_id = t.route_id
+     JOIN vehicles v ON v.number_plate = t.number_plate
+     WHERE t.driver_id = ?
+     ORDER BY t.departure_time DESC`,
+    [req.session.user.id],
+    (err, trips) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.render("driver-trips.ejs", { trips });
+    },
+  );
+});
+
+app.get("/driverprofile", (req, res) => {
+  if (!req.session.user || req.session.user.role !== "driver") {
+    return res.status(403).redirect("/login");
+  }
+  dbConn.query(
+    `SELECT first_name, last_name, id_number, phone_number, license_number,
+            license_expiry_date, status, date_joined
+     FROM drivers WHERE driver_id = ?`,
+    [req.session.user.id],
+    (err, results) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      if (results.length === 0) {
+        return res.status(404).send("Driver profile not found");
+      }
+      res.render("driver-profile.ejs", { driver: results[0] });
+    },
+  );
+});
+app.get("/adminregister", (req, res) => {
   if (req.session && req.session.user) {
     res.render("registeradmin.ejs");
   } else {
     res.status(401).send("Not Allowed / Unauthorized ");
   }
 });
-app.post("/register/admin", (req, res) => {
+app.post("/adminregister", (req, res) => {
   if (req.session && req.session.user) {
     const { username, password } = req.body;
     const saltRounds = 10;
@@ -188,13 +261,13 @@ app.post("/register/admin", (req, res) => {
         console.error("Database error:", err);
         return res.status(500).send("Internal Server Error");
       }
-      res.redirect("/register/admin?success=true");
+      res.redirect("/adminregister?success=true");
     });
   } else {
     res.status(401).send("Not Allowed / Unauthorized ");
   }
 });
-app.get("/register/driver", (req, res) => {
+app.get("/admindriverregister", (req, res) => {
   if (req.session && req.session.user && req.session.user.role === "admin") {
     res.render("registerdriver.ejs");
   } else {
@@ -202,7 +275,7 @@ app.get("/register/driver", (req, res) => {
   }
 });
 
-app.get("/trips", (req, res) => {
+app.get("/admintrips", (req, res) => {
   if (req.session && req.session.user) {
     const getDriverInfo = `select driver_id, first_name, last_name, license_number from drivers`;
     const getRouteInfo = `select route_id, origin, destination from routes`;
@@ -243,7 +316,7 @@ app.get("/trips", (req, res) => {
   }
 });
 
-app.get("/bookings", (req, res) => {
+app.get("/adminbookings", (req, res) => {
   if (req.session && req.session.user) {
     const tripsQuery = `
       SELECT
@@ -319,7 +392,7 @@ app.post("/add-booking", (req, res) => {
     !Number.isInteger(seatNumber) ||
     seatNumber < 1
   ) {
-    return res.redirect("/bookings?error=Enter all required booking details.");
+    return res.redirect("/adminbookings?error=Enter all required booking details.");
   }
 
   const tripQuery = `
@@ -335,7 +408,7 @@ app.post("/add-booking", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
     if (tripResults.length === 0 || seatNumber > tripResults[0].capacity) {
-      return res.redirect("/bookings?error=That trip is unavailable or the seat number is invalid.");
+      return res.redirect("/adminbookings?error=That trip is unavailable or the seat number is invalid.");
     }
 
     const seatQuery =
@@ -346,7 +419,7 @@ app.post("/add-booking", (req, res) => {
         return res.status(500).send("Internal Server Error");
       }
       if (seatResults.length > 0) {
-        return res.redirect("/bookings?error=That seat is already booked for this trip.");
+        return res.redirect("/adminbookings?error=That seat is already booked for this trip.");
       }
 
       const insertQuery = `
@@ -362,14 +435,14 @@ app.post("/add-booking", (req, res) => {
             console.error("Database error:", insertErr);
             return res.status(500).send("Internal Server Error");
           }
-          res.redirect("/bookings?success=true");
+          res.redirect("/adminbookings?success=true");
         },
       );
     });
   });
 });
 
-app.get("/routes", (req, res) => {
+app.get("/adminroutes", (req, res) => {
   if (req.session && req.session.user) {
     dbConn.query("SELECT * FROM routes", (err, results) => {
       if (err) {
@@ -397,14 +470,14 @@ app.post("/add-route", (req, res) => {
         console.error("Database error:", err);
         return res.status(500).send("Internal Server Error");
       }
-      res.redirect("/routes?addSuccess=true"); // redirect to routes page with success message on successful route addition
+      res.redirect("/adminroutes?addSuccess=true"); // redirect to routes page with success message on successful route addition
     });
   } else {
     res.status(401).redirect("/login");
   }
 });
 
-app.get("/drivers", (req, res) => {
+app.get("/admindrivers", (req, res) => {
   if (req.session && req.session.user) {
     dbConn.query("SELECT * FROM drivers", (err, results) => {
       if (err) {
@@ -439,14 +512,14 @@ app.post("/add-driver", (req, res) => {
         console.error("Database error:", err);
         return res.status(500).send("Internal Server Error");
       }
-      res.redirect("/drivers?addSuccess=true");
+      res.redirect("/admindrivers?addSuccess=true");
     });
   } else {
     res.status(401).redirect("/login");
   }
 });
 
-app.get("/vehicles", (req, res) => {
+app.get("/adminvehicles", (req, res) => {
   if (req.session && req.session.user) {
     dbConn.query("SELECT * FROM vehicles", (err, results) => {
       if (err) {
@@ -473,7 +546,7 @@ app.post("/add-vehicle", (req, res) => {
         console.error("Database error:", err);
         return res.status(500).send("Internal Server Error");
       }
-      res.redirect("/vehicles?addSuccess=true");
+      res.redirect("/adminvehicles?addSuccess=true");
     });
   } else {
     res.status(401).redirect("/login");
@@ -490,7 +563,7 @@ app.get("/update-driver-status", (req, res) => {
         console.error("Database error:", err);
         return res.status(500).send("Internal Server Error");
       }
-      res.redirect("/drivers");
+      res.redirect("/admindrivers");
     });
   } else {
     res.status(401).redirect("/login");
@@ -507,7 +580,7 @@ app.get("/update-vehicle-status", (req, res) => {
         console.error("Database error:", err);
         return res.status(500).send("Internal Server Error");
       }
-      res.redirect("/vehicles");
+      res.redirect("/adminvehicles");
     });
   } else {
     res.status(401).redirect("/login");
@@ -537,7 +610,7 @@ app.post("/add-trip", (req, res) => {
         console.error("Database error:", err);
         return res.status(500).send("Internal Server Error");
       }
-      res.redirect("/trips");
+      res.redirect("/admintrips");
     });
   } else {
     res.status(401).redirect("/login");
@@ -554,7 +627,7 @@ app.get("/update-trip-status", (req, res) => {
         console.error("Database error:", err);
         return res.status(500).send("Internal Server Error");
       }
-      res.redirect("/trips");
+      res.redirect("/admintrips");
     });
   } else {
     res.status(401).redirect("/login");
@@ -571,14 +644,14 @@ app.get("/delete-trip", (req, res) => {
         console.error("Database error:", err);
         return res.status(500).send("Internal Server Error");
       }
-      res.redirect("/trips");
+      res.redirect("/admintrips");
     });
   } else {
     res.status(401).redirect("/login");
   }
 });
 
-app.get("/payments", (req, res) => {
+app.get("/adminpayments", (req, res) => {
   if (req.session && req.session.user) {
     res.render("payments-manage.ejs");
   } else {
