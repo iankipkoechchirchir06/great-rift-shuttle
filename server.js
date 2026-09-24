@@ -8,9 +8,10 @@ const { formatDate } = require("./utility");
 const dbConn = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "54321",
+  password: "Kipkoech06",
   database: "greatriftshuttle",
 });
+const PORT = 3003;
 app.use(
   session({
     secret: "qwertyuiopasdfghjklzxcvbnm", // should be a long, random string in production and stored securely
@@ -369,4 +370,4 @@ app.get("/payments", (req, res) => {
 });
 
 //start the app
-app.listen(3003, () => console.log("Server running on PORT 3003"));
+app.listen(PORT, () => console.log("Server running on http://localhost:" + PORT));
