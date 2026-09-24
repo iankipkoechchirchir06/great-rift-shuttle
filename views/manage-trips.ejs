@@ -142,6 +142,13 @@
         document.getElementById('newTripModal').classList.remove('show');
       }
 
+      function setDepartureTimeMinimum() {
+        const now = new Date();
+        const localNow = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+        document.getElementById('departureTime').min = localNow.toISOString().slice(0, 16);
+      }
+
+      setDepartureTimeMinimum();
       document.querySelector('.btn-primary').addEventListener('click', openNewTripModal);
 
       window.addEventListener('click', (event) => {

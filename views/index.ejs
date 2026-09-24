@@ -66,6 +66,10 @@
                     <input type="date" id="date" required />
                 </div>
                 <div class="form-group">
+                    <label for="time">Travel Time</label>
+                    <input type="time" id="time" required />
+                </div>
+                <div class="form-group">
                     <label for="passengers">Passengers</label>
                     <input type="number" id="passengers" min="1" max="11" value="1" required />
                 </div>
@@ -451,9 +455,46 @@
 
     <script>
         const bookingForm = document.querySelector('.booking-form');
+        const departurePlace = document.getElementById('from');
+        const destinationPlace = document.getElementById('to');
+        const travelDate = document.getElementById('date');
+        const travelTime = document.getElementById('time');
+        const bookingButton = bookingForm.querySelector('button');
+
+        function setBookingDateLimits() {
+            const now = new Date();
+            const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            travelDate.min = today;
+        }
+
+        setBookingDateLimits();
+
         if (bookingForm) {
-            bookingForm.addEventListener('submit', (e) => {
-                e.preventDefault();
+            bookingButton.addEventListener('click', (e) => {
+                destinationPlace.setCustomValidity('');
+                travelDate.setCustomValidity('');
+                const invalidField = bookingForm.querySelector('select:invalid, input:invalid');
+                if (invalidField) {
+                    e.preventDefault();
+                    invalidField.reportValidity();
+                    return;
+                }
+
+                if (departurePlace.value === destinationPlace.value) {
+                    e.preventDefault();
+                    destinationPlace.setCustomValidity('Departure and destination places must be different.');
+                    destinationPlace.reportValidity();
+                    return;
+                }
+
+                const bookingDateTime = new Date(`${travelDate.value}T${travelTime.value}`);
+                if (bookingDateTime <= new Date()) {
+                    e.preventDefault();
+                    travelDate.setCustomValidity('Choose a future travel date and time.');
+                    travelDate.reportValidity();
+                    return;
+                }
+
                 alert('Thank you for booking! Proceed to payment details.');
             });
         }

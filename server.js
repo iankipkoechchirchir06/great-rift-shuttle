@@ -313,6 +313,18 @@ app.post("/add-trip", (req, res) => {
   if (req.session && req.session.user) {
     const { driver_id, route_id, number_plate, departure_time, status } =
       req.body;
+    const departureDate = new Date(departure_time);
+
+    if (
+      !departure_time ||
+      Number.isNaN(departureDate.getTime()) ||
+      departureDate <= new Date()
+    ) {
+      return res
+        .status(400)
+        .send("Departure date and time must be a valid future date and time.");
+    }
+
     const insertQuery = `INSERT INTO trips (driver_id, route_id, number_plate, departure_time, status) VALUES (${driver_id}, ${route_id}, "${number_plate}", "${departure_time}", "${status}")`;
 
     dbConn.query(insertQuery, (err, result) => {
