@@ -10,6 +10,20 @@
   background-color: var(--light-color);
 }
 
+.dashboard-main {
+  min-width: 0;
+}
+
+.dashboard-card,
+.dashboard-header {
+  min-width: 0;
+}
+
+.dashboard-menu-toggle,
+.dashboard-sidebar-backdrop {
+  display: none;
+}
+
 a:visited {
   color: white;
 }
@@ -471,20 +485,48 @@ tr:nth-child(even) {
 
   .dashboard-sidebar {
     position: fixed;
-    left: -260px;
+    left: 0;
+    transform: translateX(-100%);
     top: 60px;
     z-index: 999;
     width: 260px;
     height: calc(100vh - 60px);
-    transition: left 0.3s ease;
+    transition: transform 0.3s ease;
   }
 
   .dashboard-sidebar.active {
-    left: 0;
+    transform: translateX(0);
+  }
+
+  .dashboard-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    position: fixed;
+    top: 72px;
+    left: var(--spacing-md);
+    z-index: 1001;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 0.75rem;
+    background: white;
+    color: var(--primary-color);
+    font: inherit;
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+  }
+
+  .dashboard-sidebar-backdrop.active {
+    display: block;
+    position: fixed;
+    inset: 60px 0 0;
+    z-index: 998;
+    background: rgba(0, 0, 0, 0.45);
   }
 
   .dashboard-main {
-    padding: var(--spacing-lg);
+    padding: 5rem var(--spacing-lg) var(--spacing-lg);
   }
 
   .dashboard-header {
@@ -507,6 +549,7 @@ tr:nth-child(even) {
 
   .filter-group select {
     flex: 1;
+    min-width: 0;
   }
 
   .item-card {
@@ -521,7 +564,7 @@ tr:nth-child(even) {
 
 @media (max-width: 480px) {
   .dashboard-main {
-    padding: var(--spacing-md);
+    padding: 5rem var(--spacing-sm) var(--spacing-md);
   }
 
   .dashboard-header h1 {
@@ -556,6 +599,10 @@ tr:nth-child(even) {
 
   .header-actions .btn {
     width: 100%;
+  }
+
+  .dashboard-card {
+    padding: var(--spacing-md);
   }
 }
 
@@ -730,12 +777,23 @@ tr:nth-child(even) {
 
 .trips-table-wrapper {
   overflow-x: auto;
+  max-width: 100%;
 }
 
+.routes-table,
+.data-table,
 .trips-table {
+  min-width: 600px;
+}
+
+.routes-table,
+.data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .trips-table thead {

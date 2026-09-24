@@ -73,3 +73,26 @@
     </a>
   </nav>
 </aside>
+
+<script>
+  const dashboardMenuToggle = document.getElementById("dashboardMenuToggle");
+  const dashboardSidebar = document.getElementById("dashboardSidebar");
+  const dashboardSidebarBackdrop = document.getElementById("dashboardSidebarBackdrop");
+
+  function closeDashboardMenu() {
+    dashboardSidebar.classList.remove("active");
+    dashboardSidebarBackdrop.classList.remove("active");
+    dashboardMenuToggle.setAttribute("aria-expanded", "false");
+  }
+
+  dashboardMenuToggle.addEventListener("click", () => {
+    const isOpen = dashboardSidebar.classList.toggle("active");
+    dashboardSidebarBackdrop.classList.toggle("active", isOpen);
+    dashboardMenuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  dashboardSidebarBackdrop.addEventListener("click", closeDashboardMenu);
+  dashboardSidebar.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeDashboardMenu);
+  });
+</script>

@@ -43,6 +43,14 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     background-color: #fff;
+    overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+    max-width: 100%;
+    height: auto;
 }
 
 /* ============================================================
@@ -53,6 +61,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
+    width: 100%;
 }
 
 /* ============================================================
@@ -354,6 +363,8 @@ body {
 
 .form-group input,
 .form-group select {
+    width: 100%;
+    min-width: 0;
     padding: var(--spacing-sm);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
